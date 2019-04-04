@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Graphic Simulator 2000</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="script.js"></script>
+</head>
+
+<body>
+
+    <table>
+        <tr>
+            <th>
+                <div id="screen"></div>
+            </th>
+            <th>
+                <div class="container">
+                    <label id="coordenadas">COORDENADAS</label> 
+                </div>
+                <div class="container">
+                        <input class="form-btn btn-negative" type="button" value="LIMPAR TELA" onclick="screenClean(x,y);">
+                </div>
+                <div class="container">
+                    <label for="color">COR</label>
+                    <input class="form-txt-large" type="text" id="color"><br>
+                    <input class="form-btn btn-positive" type="button" value="ESCOLHER"
+                        onclick="color = valueById('color');">
+                </div>
+                <div class="container">
+                    <label>LINHA DE BRESENHAM</label><br>
+                    <label for="eixoX1">X1 = </label>
+                    <input class="form-txt" type="text" id="eixoX1">
+                    <label for="eixoY1">Y1 = </label>
+                    <input class="form-txt" type="text" id="eixoY1"><br>
+                    <label for="eixoX2">X2 = </label>
+                    <input class="form-txt" type="text" id="eixoX2">
+                    <label for="eixoY2">Y2 = </label>
+                    <input class="form-txt" type="text" id="eixoY2"><br>
+                    <input class="form-btn btn-positive" type="button" value="PLOTAR"
+                        onclick="draw_line(numberValueById('eixoX1'),numberValueById('eixoY1'),numberValueById('eixoX2'),numberValueById('eixoY2'),color)">
+                </div>
+        </tr>
+    </table>
+    <script>
+        //declaração do tamanho da tela de desenho
+        var x = 30;
+        var y = 30;
+        //chama a função que cria a tela
+        screen(x, y);
+        //cria a variavel global de cor
+        var color;
+    </script>
+</body>
+
+</html>
