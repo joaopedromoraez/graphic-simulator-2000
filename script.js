@@ -53,95 +53,30 @@ function numberValueById(x) {
     return Number(document.getElementById(x).value);
 }
 
-
 function coordenadas(x,y){
     document.getElementById('coordenadas').innerHTML = 'COORDENADAS ('+(x)+','+(y)+')';
 
 }
 
 // =========== ALGORITMOS GRAFICOS ==================
-// bresenham
+// Bresenham
+function bresenham(x0, y0, x1, y1,color) {
 
-let draw_line = (x1, y1, x2, y2,color) => {
+    var dx = Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+    var dy = Math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1; 
+    var err = (dx>dy ? dx : -dy)/2;
     
-    // Iterators, counters required by algorithm
-    let x, y, dx, dy, dx1, dy1, px, py, xe, ye, i;
-
-    // Calculate line deltas
-    dx = x2 - x1;
-    dy = y2 - y1;
-
-    // Create a positive copy of deltas (makes iterating easier)
-    dx1 = Math.abs(dx);
-    dy1 = Math.abs(dy);
-
-    // Calculate error intervals for both axis
-    px = 2 * dy1 - dx1;
-    py = 2 * dx1 - dy1;
-
-    // The line is X-axis dominant
-    if (dy1 <= dx1) {
-
-        // Line is drawn left to right
-        if (dx >= 0) {
-            x = x1; y = y1; xe = x2;
-        } else { // Line is drawn right to left (swap ends)
-            x = x2; y = y2; xe = x1;
-        }
-        console.log("x:"+x,"y"+y)
-        console.log(typeof(x))
-        pixelPaint(x, y,color); // Draw first pixel
-
-        // Rasterize the line
-        for (i = 0; x < xe; i++) {
-            x = x + 1;
-
-            // Deal with octants...
-            if (px < 0) {
-                px = px + 2 * dy1;
-            } else {
-                if ((dx < 0 && dy < 0) || (dx > 0 && dy > 0)) {
-                    y = y + 1;
-                } else {
-                    y = y - 1;
-                }
-                px = px + 2 * (dy1 - dx1);
-            }
-
-            // Draw pixel from line span at currently rasterized position
-            console.log("x:"+x,"y"+y)
-            pixelPaint(x, y,color);
-        }
-
-    } else { // The line is Y-axis dominant
-
-        // Line is drawn bottom to top
-        if (dy >= 0) {
-            x = x1; y = y1; ye = y2;
-        } else { // Line is drawn top to bottom
-            x = x2; y = y2; ye = y1;
-        }
-        console.log("x:"+x,"y"+y)
-        pixelPaint(x, y,color); // Draw first pixel
-
-        // Rasterize the line
-        for (i = 0; y < ye; i++) {
-            y = y + 1;
-
-            // Deal with octants...
-            if (py <= 0) {
-                py = py + 2 * dx1;
-            } else {
-                if ((dx < 0 && dy<0) || (dx > 0 && dy > 0)) {
-                    x = x + 1;
-                } else {
-                    x = x - 1;
-                }
-                py = py + 2 * (dx1 - dy1);
-            }
-            console.log("x:"+x,"y"+y)
-            // Draw pixel from line span at currently rasterized position
-            pixelPaint(x, y,color);
-        }
+    while (true) {
+        pixelPaint(x0,y0,color);
+        if (x0 === x1 && y0 === y1) break;
+        var e2 = err;
+        if (e2 > -dx) { err -= dy; x0 += sx; }
+        if (e2 < dy) { err += dx; y0 += sy; }
     }
- }
+}
+
+// Circulo
+function circulo (x,y,raio,color){
+
+}
+

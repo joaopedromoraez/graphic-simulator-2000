@@ -1,4 +1,20 @@
 <!DOCTYPE html>
+
+<!-- 
+Desenvolver um software com interface gráfica que utilize os algoritmos ministrados em aula e mostre o resultado em uma grade de pixels. Considere como pixel da sua aplicação 5x5 pixels reais.
+Os algoritmos que devem ser implementados são os seguintes:
+[OK] Bresenham [0.85pts],
+[  ] Círculos [0.85pts],
+[  ] Curvas Bezier [0.85pts],
+[  ] Preencimento Recursivo [0.85pts],
+[  ] Preencimento Scanline [0.85pts],
+[  ] Recorte de linha [0.85pts],
+[  ] Recorte de polígonos [0.85pts],
+[  ] Transformações (3 básicas [3x0.85pts]),
+[  ] Projeções Ortográficas [0.85pts] e
+[  ] Projeções Perspectivas [0.85pts]).
+-->
+
 <html lang="pt-br">
 
 <head>
@@ -30,17 +46,29 @@
                 </div>
                 <div class="container">
                     <label>LINHA DE BRESENHAM</label><br>
-                    <label for="eixoX1">X1 = </label>
+                    <label for="eixoX1">X1</label>
                     <input class="form-txt" type="text" id="eixoX1">
-                    <label for="eixoY1">Y1 = </label>
+                    <label for="eixoY1">Y1</label>
                     <input class="form-txt" type="text" id="eixoY1"><br>
-                    <label for="eixoX2">X2 = </label>
+                    <label for="eixoX2">X2</label>
                     <input class="form-txt" type="text" id="eixoX2">
-                    <label for="eixoY2">Y2 = </label>
+                    <label for="eixoY2">Y2</label>
                     <input class="form-txt" type="text" id="eixoY2"><br>
                     <input class="form-btn btn-positive" type="button" value="PLOTAR"
-                        onclick="draw_line(numberValueById('eixoX1'),numberValueById('eixoY1'),numberValueById('eixoX2'),numberValueById('eixoY2'),color)">
+                        onclick="bresenham(numberValueById('eixoX1'),numberValueById('eixoY1'),numberValueById('eixoX2'),numberValueById('eixoY2'),color)">
                 </div>
+                <div class="container">
+                    <label>CIRCULO</label><br>
+                    <label for="eixoX">X</label>
+                    <input class="form-txt" type="text" id="eixoX">
+                    <label for="eixoY">Y</label>
+                    <input class="form-txt" type="text" id="eixoY">
+                    <label for="raio">RAIO</label>
+                    <input class="form-txt" type="text" id="raio"><br>
+                    <input class="form-btn btn-positive" type="button" value="PLOTAR"
+                        onclick="circulo(numberValueById('eixoX'),numberValueById('eixoY'),numberValueById('raio'),color)">
+                </div>
+
         </tr>
     </table>
     <script>
