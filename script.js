@@ -61,17 +61,16 @@ function coordenadas(x, y) {
     document.getElementById('coordenadas').innerHTML = 'COORDENADAS (' + (x) + ',' + (y) + ')';
 
 }
-
 // =========== ALGORITMOS GRAFICOS ==================
 // Bresenham
-function bresenham(x0, y0, x1, y1, color) {
+function bresenham(x0, y0, x1, y1) {
 
     var dx = Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
     var dy = Math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
     var err = (dx > dy ? dx : -dy) / 2;
 
     while (true) {
-        pixelPaint(x0, y0, color);
+        pixelPaint(x0, y0);
         if (x0 === x1 && y0 === y1) break;
         var e2 = err;
         if (e2 > -dx) { err -= dy; x0 += sx; }
@@ -122,3 +121,28 @@ function circulo(xCenter, yCenter, radius) {
 }
 
 //Curva de Belzie
+function getPt(n1, n2, perc) {
+    let diff = n2 - n1;
+
+    // return Math.ceil (n1 + (diff * perc));
+    return n1 + (diff * perc);
+}
+
+function bezier(x1, y1, x2, y2, x3, y3) {
+
+    for (let i = 0; i < 1 ; i += 0.01 )
+    {
+        // The Green Line
+        let xa = getPt(x1, x2, i);
+        let ya = getPt(y1, y2, i);
+        let xb = getPt(x2, x3, i);
+        let yb = getPt(y2, y3, i);
+
+        // The Black Dot
+        let x = getPt(xa, xb, i);
+        let y = getPt(ya, yb, i);
+
+        console.log(x,y);
+        // pixelPaint(x, y);
+    }
+}

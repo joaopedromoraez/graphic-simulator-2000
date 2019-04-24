@@ -33,16 +33,16 @@ Os algoritmos que devem ser implementados são os seguintes:
             </th>
             <th>
                 <div class="container">
-                    <label id="coordenadas">COORDENADAS</label> 
+                    <label id="coordenadas">COORDENADAS</label>
                 </div>
                 <div class="container">
-                        <input class="form-btn btn-negative" type="button" value="LIMPAR TELA" onclick="screenClean(xScreen,yScreen);">
+                    <input class="form-btn btn-negative" type="button" value="LIMPAR TELA"
+                        onclick="screenClean(xScreen,yScreen);">
                 </div>
                 <div class="container">
                     <label for="color">COR</label>
                     <input class="form-txt" type="color" id="color">
-                    <input class="form-btn btn-positive" type="button" value="OK"
-                        onclick="color = valueById('color');">
+                    <input class="form-btn btn-positive" type="button" value="OK" onclick="color = valueById('color');">
                 </div>
                 <div class="container">
                     <label>LINHA DE BRESENHAM</label><br>
@@ -55,7 +55,7 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <label for="eixoY2">Y2</label>
                     <input class="form-txt" type="text" id="eixoY2"><br>
                     <input class="form-btn btn-positive" type="button" value="PLOTAR"
-                        onclick="bresenham(numberValueById('eixoX1'),numberValueById('eixoY1'),numberValueById('eixoX2'),numberValueById('eixoY2'),color)">
+                        onclick="bresenham(numberValueById('eixoX1'),numberValueById('eixoY1'),numberValueById('eixoX2'),numberValueById('eixoY2'))">
                 </div>
                 <div class="container">
                     <label>CIRCULO</label><br>
@@ -68,7 +68,26 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <input class="form-btn btn-positive" type="button" value="PLOTAR"
                         onclick="circulo(numberValueById('eixoX'),numberValueById('eixoY'),numberValueById('raio'))">
                 </div>
-
+            </th>
+            <th>
+                <div class="container">
+                    <label>BÉZIER</label><br>
+                    <label for="eixoX1">X1</label>
+                    <input class="form-txt" type="text" id="eixoX1">
+                    <label for="eixoY1">Y1</label>
+                    <input class="form-txt" type="text" id="eixoY1"><br>
+                    <label for="eixoX2">X2</label>
+                    <input class="form-txt" type="text" id="eixoX2">
+                    <label for="eixoY2">Y2</label>
+                    <input class="form-txt" type="text" id="eixoY2"><br>
+                    <label for="eixoX3">X3</label>
+                    <input class="form-txt" type="text" id="eixoX3">
+                    <label for="eixoY3">Y3</label>
+                    <input class="form-txt" type="text" id="eixoY3"><br>
+                    <input class="form-btn btn-positive" type="button" value="PLOTAR"
+                        onclick="bezier(numberValueById('eixoX1'),numberValueById('eixoY1'),numberValueById('eixoX2'),numberValueById('eixoY2'),numberValueById('eixoX3'),numberValueById('eixoY3'))">
+                </div>
+            </th>
         </tr>
     </table>
     <script>
