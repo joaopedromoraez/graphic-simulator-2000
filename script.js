@@ -22,7 +22,7 @@ function screen(x, y) {
 }
 
 function pixelPaint(x, y) {
-    if (x >= 0 && y >= 0) {
+    if (x >= 0 && y >= 0 && x < xScreen && y < yScreen) {
         let pixel = document.getElementsByClassName('row')[x].getElementsByClassName('column')[y];
         pixel.style.backgroundColor = color;
     }
@@ -120,3 +120,5 @@ function circulo(xCenter, yCenter, radius) {
         circlePoints(xCenter, yCenter, x, y);
     }
 }
+
+//Curva de Belzie
