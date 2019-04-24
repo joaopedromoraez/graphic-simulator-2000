@@ -1,19 +1,19 @@
 function screen(x,y){
-    var table = document.createElement('table','screen'); 
+    let table = document.createElement('table','screen'); 
     table.className = 'screen';
     document.getElementById('screen').appendChild(table);
     
-    for (var i = 0; i < x ; i++){
-        var line = document.createElement('tr'); 
+    for (let i = 0; i < x ; i++){
+        let line = document.createElement('tr'); 
         line.className = 'row';
         table.appendChild(line);
 
-        for (var j = 0; j < y ; j++){
-            var column = document.createElement('th'); 
+        for (let j = 0; j < y ; j++){
+            let column = document.createElement('th'); 
             column.className = 'column';
             column.style.backgroundColor = "white";
-            column.style.width = '20px';
-            column.style.height = '20px';
+            column.style.width = '10px';
+            column.style.height = '10px';
             column.setAttribute('onmousemove','coordenadas('+i+','+j+');');
             column.setAttribute('onclick','clickPixel('+i+','+j+',color);');
             line.appendChild(column);
@@ -21,25 +21,27 @@ function screen(x,y){
     }
 }
 
-function pixelPaint(x,y,color = '#000'){
-    document.getElementsByClassName('row')[x].getElementsByClassName('column')[y].style.backgroundColor = color;
+function pixelPaint(x,y){
+    let pixel = document.getElementsByClassName('row')[x].getElementsByClassName('column')[y];
+    pixel.style.backgroundColor = color;
 }
 
 function cleanPixel(x,y){
-    document.getElementsByClassName('row')[x].getElementsByClassName('column')[y].style.backgroundColor = 'white';
+    let pixel = document.getElementsByClassName('row')[x].getElementsByClassName('column')[y];
+    pixel.style.backgroundColor = 'white';
 }
 
-function clickPixel(x,y,color = '#000'){
+function clickPixel(x,y){
     if (document.getElementsByClassName('row')[x].getElementsByClassName('column')[y].style.backgroundColor === 'white'){
-        pixelPaint(x,y,color);
+        pixelPaint(x,y);
     } else {
         cleanPixel(x,y);
     }
 }
 
 function screenClean(i, j) { //limpa todos os pixels da tela
-    for (var x = 0; x < i; x++) {
-        for (var y = 0; y < j; y++) {
+    for (let x = 0; x < i; x++) {
+        for (let y = 0; y < j; y++) {
             cleanPixel(x, y);
         }
     }
@@ -75,8 +77,48 @@ function bresenham(x0, y0, x1, y1,color) {
     }
 }
 
-// Circulo
-function circulo (x,y,raio,color){
 
-}
 
+
+function circlePoints(cx, cy, x, y)
+    {      
+        if (x === 0) {
+            pixelPaint(cx, cy + y);
+            pixelPaint(cx, cy - y);
+            pixelPaint(cx + y, cy);
+            pixelPaint(cx - y, cy);
+        } else if (x === y) {
+            pixelPaint(cx + x, cy + y);
+            pixelPaint(cx - x, cy + y);
+            pixelPaint(cx + x, cy - y);
+            pixelPaint(cx - x, cy - y);
+        } else if (x < y) {
+            pixelPaint(cx + x, cy + y);
+            pixelPaint(cx - x, cy + y);
+            pixelPaint(cx + x, cy - y);
+            pixelPaint(cx - x, cy - y);
+            pixelPaint(cx + y, cy + x);
+            pixelPaint(cx - y, cy + x);
+            pixelPaint(cx + y, cy - x);
+            pixelPaint(cx - y, cy - x);
+        }
+    }
+
+function circulo (xCenter, yCenter, radius)
+    {
+        let x = 0;
+        let y = radius;
+        let p = (5 - radius*4)/4;
+
+        circlePoints(xCenter, yCenter, x, y);
+        while (x < y) {
+            x++;
+            if (p < 0) {
+                p += 2*x+1;
+            } else {
+                y--;
+                p += 2*(x-y)+1;
+            }
+            circlePoints(xCenter, yCenter, x, y);
+        }
+    }

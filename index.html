@@ -36,7 +36,7 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <label id="coordenadas">COORDENADAS</label> 
                 </div>
                 <div class="container">
-                        <input class="form-btn btn-negative" type="button" value="LIMPAR TELA" onclick="screenClean(x,y);">
+                        <input class="form-btn btn-negative" type="button" value="LIMPAR TELA" onclick="screenClean(xScreen,yScreen);">
                 </div>
                 <div class="container">
                     <label for="color">COR</label>
@@ -66,19 +66,19 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <label for="raio">RAIO</label>
                     <input class="form-txt" type="text" id="raio"><br>
                     <input class="form-btn btn-positive" type="button" value="PLOTAR"
-                        onclick="circulo(numberValueById('eixoX'),numberValueById('eixoY'),numberValueById('raio'),color)">
+                        onclick="circulo(numberValueById('eixoX'),numberValueById('eixoY'),numberValueById('raio'))">
                 </div>
 
         </tr>
     </table>
     <script>
         //declaração do tamanho da tela de desenho
-        var x = 30;
-        var y = 30;
+        var xScreen = 40;
+        var yScreen = 40;
         //chama a função que cria a tela
-        screen(x, y);
+        screen(xScreen, yScreen);
         //cria a variavel global de cor
-        var color;
+        var color = 'black';
     </script>
 </body>
 
