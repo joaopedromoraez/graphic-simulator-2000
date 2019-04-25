@@ -121,28 +121,6 @@ function circulo(xCenter, yCenter, radius) {
 }
 
 //Curva de Belzie
-function getPt(n1, n2, perc) {
-    let diff = n2 - n1;
-
-    // return Math.ceil (n1 + (diff * perc));
-    return n1 + (diff * perc);
-}
-
 function bezier(x1, y1, x2, y2, x3, y3) {
 
-    for (let i = 0; i < 1 ; i += 0.01 )
-    {
-        // The Green Line
-        let xa = getPt(x1, x2, i);
-        let ya = getPt(y1, y2, i);
-        let xb = getPt(x2, x3, i);
-        let yb = getPt(y2, y3, i);
-
-        // The Black Dot
-        let x = getPt(xa, xb, i);
-        let y = getPt(ya, yb, i);
-
-        console.log(x,y);
-        // pixelPaint(x, y);
-    }
 }
