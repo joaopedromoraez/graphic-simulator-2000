@@ -5,7 +5,7 @@ Desenvolver um software com interface gráfica que utilize os algoritmos ministr
 Os algoritmos que devem ser implementados são os seguintes:
 [OK] Bresenham [0.85pts],
 [OK] Círculos [0.85pts],
-[  ] Curvas Bezier [0.85pts],
+[OK] Curvas Bezier [0.85pts],
 [  ] Preencimento Recursivo [0.85pts],
 [  ] Preencimento Scanline [0.85pts],
 [  ] Recorte de linha [0.85pts],
@@ -73,21 +73,27 @@ Os algoritmos que devem ser implementados são os seguintes:
                 <div class="container">
                     <label>BÉZIER</label><br>
                     <label for="eixoX1">X1</label>
-                    <input class="form-txt" type="text" id="eixoX1">
+                    <input class="form-txt" type="text" id="bezier-eixoX1">
+
                     <label for="eixoY1">Y1</label>
-                    <input class="form-txt" type="text" id="eixoY1"><br>
+                    <input class="form-txt" type="text" id="bezier-eixoY1"><br>
+
                     <label for="eixoX2">X2</label>
-                    <input class="form-txt" type="text" id="eixoX2">
+                    <input class="form-txt" type="text" id="bezier-eixoX2">
+
                     <label for="eixoY2">Y2</label>
-                    <input class="form-txt" type="text" id="eixoY2"><br>
+                    <input class="form-txt" type="text" id="bezier-eixoY2"><br>
+
                     <label for="eixoX3">X3</label>
-                    <input class="form-txt" type="text" id="eixoX3">
+                    <input class="form-txt" type="text" id="bezier-eixoX3">
+
                     <label for="eixoY3">Y3</label>
-                    <input class="form-txt" type="text" id="eixoY3"><br>
+                    <input class="form-txt" type="text" id="bezier-eixoY3"><br>
+                    
                     <input class="form-btn btn-positive" type="button" value="PLOTAR"
-                        onclick="bezier(numberValueById('eixoX1'),numberValueById('eixoY1'),
-                                        numberValueById('eixoX2'),numberValueById('eixoY2'),
-                                        numberValueById('eixoX3'),numberValueById('eixoY3'))">
+                        onclick="bezier(numberValueById('bezier-eixoX1'),numberValueById('bezier-eixoY1'),
+                                        numberValueById('bezier-eixoX2'),numberValueById('bezier-eixoY2'),
+                                        numberValueById('bezier-eixoX3'),numberValueById('bezier-eixoY3'))">
                 </div>
             </th>
         </tr>
