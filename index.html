@@ -59,41 +59,73 @@ Os algoritmos que devem ser implementados são os seguintes:
                 </div>
                 <div class="container">
                     <label>CIRCULO</label><br>
-                    <label for="eixoX">X</label>
-                    <input class="form-txt" type="text" id="eixoX">
-                    <label for="eixoY">Y</label>
-                    <input class="form-txt" type="text" id="eixoY">
+                    <label for="raio-center-eixoX">X</label>
+                    <input class="form-txt" type="text" id="raio-center-eixoX">
+                    <label for="raio-center-eixoY">Y</label>
+                    <input class="form-txt" type="text" id="raio-center-eixoY">
                     <label for="raio">RAIO</label>
                     <input class="form-txt" type="text" id="raio"><br>
                     <input class="form-btn btn-positive" type="button" value="PLOTAR"
-                        onclick="circulo(numberValueById('eixoX'),numberValueById('eixoY'),numberValueById('raio'))">
+                        onclick="circulo(numberValueById('raio-center-eixoX'),numberValueById('raio-center-eixoY'),numberValueById('raio'))">
                 </div>
             </th>
             <th>
                 <div class="container">
-                    <label>BÉZIER</label><br>
-                    <label for="eixoX1">X1</label>
-                    <input class="form-txt" type="text" id="bezier-eixoX1">
+                    <label>BÉZIER QUADRATICO</label><br>
+                    <label for="bezier-quadratic-eixoX1">X1</label>
+                    <input class="form-txt" type="text" id="bezier-quadratic-eixoX1">
 
-                    <label for="eixoY1">Y1</label>
-                    <input class="form-txt" type="text" id="bezier-eixoY1"><br>
+                    <label for="bezier-quadratic-eixoY1">Y1</label>
+                    <input class="form-txt" type="text" id="bezier-quadratic-eixoY1"><br>
 
-                    <label for="eixoX2">X2</label>
-                    <input class="form-txt" type="text" id="bezier-eixoX2">
+                    <label for="bezier-quadratic-eixoX2">X2</label>
+                    <input class="form-txt" type="text" id="bezier-quadratic-eixoX2">
 
-                    <label for="eixoY2">Y2</label>
-                    <input class="form-txt" type="text" id="bezier-eixoY2"><br>
+                    <label for="bezier-quadratic-eixoY2">Y2</label>
+                    <input class="form-txt" type="text" id="bezier-quadratic-eixoY2"><br>
 
-                    <label for="eixoX3">X3</label>
-                    <input class="form-txt" type="text" id="bezier-eixoX3">
+                    <label for="bezier-quadratic-eixoX3">X3</label>
+                    <input class="form-txt" type="text" id="bezier-quadratic-eixoX3">
 
-                    <label for="eixoY3">Y3</label>
-                    <input class="form-txt" type="text" id="bezier-eixoY3"><br>
+                    <label for="bezier-quadratic-eixoY3">Y3</label>
+                    <input class="form-txt" type="text" id="bezier-quadratic-eixoY3"><br>
                     
                     <input class="form-btn btn-positive" type="button" value="PLOTAR"
-                        onclick="bezier(numberValueById('bezier-eixoX1'),numberValueById('bezier-eixoY1'),
-                                        numberValueById('bezier-eixoX2'),numberValueById('bezier-eixoY2'),
-                                        numberValueById('bezier-eixoX3'),numberValueById('bezier-eixoY3'))">
+                        onclick="bezierQuadratic(numberValueById('bezier-quadratic-eixoX1'),numberValueById('bezier-quadratic-eixoY1'),
+                                                 numberValueById('bezier-quadratic-eixoX2'),numberValueById('bezier-quadratic-eixoY2'),
+                                                 numberValueById('bezier-quadratic-eixoX3'),numberValueById('bezier-quadratic-eixoY3'))">
+                </div>
+                <div class="container">
+                    <label>BÉZIER CUBICO</label><br>
+                    <label for="eixoX1">X1</label>
+                    <input class="form-txt" type="text" id="bezier-cubic-eixoX1">
+
+                    <label for="eixoY1">Y1</label>
+                    <input class="form-txt" type="text" id="bezier-cubic-eixoY1"><br>
+
+                    <label for="eixoX2">X2</label>
+                    <input class="form-txt" type="text" id="bezier-cubic-eixoX2">
+
+                    <label for="eixoY2">Y2</label>
+                    <input class="form-txt" type="text" id="bezier-cubic-eixoY2"><br>
+
+                    <label for="eixoX3">X3</label>
+                    <input class="form-txt" type="text" id="bezier-cubic-eixoX3">
+
+                    <label for="eixoY3">Y3</label>
+                    <input class="form-txt" type="text" id="bezier-cubic-eixoY3"><br>
+
+                    <label for="eixoX4">X4</label>
+                    <input class="form-txt" type="text" id="bezier-cubic-eixoX4">
+
+                    <label for="eixoY4">Y4</label>
+                    <input class="form-txt" type="text" id="bezier-cubic-eixoY4"><br>
+                    
+                    <input class="form-btn btn-positive" type="button" value="PLOTAR"
+                        onclick="bezierCubic(numberValueById('bezier-cubic-eixoX1'),numberValueById('bezier-cubic-eixoY1'),
+                                             numberValueById('bezier-cubic-eixoX2'),numberValueById('bezier-cubic-eixoY2'),
+                                             numberValueById('bezier-cubic-eixoX3'),numberValueById('bezier-cubic-eixoY3'),
+                                             numberValueById('bezier-cubic-eixoX4'),numberValueById('bezier-cubic-eixoY4'))">
                 </div>
             </th>
         </tr>
