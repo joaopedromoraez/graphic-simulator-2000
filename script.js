@@ -122,5 +122,15 @@ function circulo(xCenter, yCenter, radius) {
 
 //Curva de Belzie
 function bezier(x1, y1, x2, y2, x3, y3) {
-
-}
+    console.log(`x1(${x1},${y1})`);
+    console.log(`x2(${x2},${y2})`);
+    console.log(`x3(${x3},${y3})`);
+    for(let t = 0 ; t <= 1 ; t += 0.01) 
+    { 
+        let xu = Math.pow(1-t,2)*x1 + 2*t*(1-t)*x2 + Math.pow(t,2)*x3; 
+        let yu = Math.pow(1-t,2)*y1 + 2*t*(1-t)*y2 + Math.pow(t,2)*y3; 
+        
+        console.table(Math.round(xu) , Math.round(yu)) ; 
+        pixelPaint(Math.round(xu) , Math.round(yu)) ; 
+    } 
+} 
