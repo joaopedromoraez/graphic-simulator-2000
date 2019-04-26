@@ -3,19 +3,19 @@ function screen(x, y) {
     table.className = 'screen';
     document.getElementById('screen').appendChild(table);
 
-    for (let i = 0; i < x; i++) {
+    for (let i = 0; i < y; i++) {
         let line = document.createElement('tr');
         line.className = 'row';
         table.appendChild(line);
 
-        for (let j = 0; j < y; j++) {
+        for (let j = 0; j < x; j++) {
             let column = document.createElement('th');
             column.className = 'column';
             column.style.backgroundColor = "white";
             column.style.width = '10px';
             column.style.height = '10px';
-            column.setAttribute('onmousemove', 'coordenadas(' + i + ',' + j + ');');
-            column.setAttribute('onclick', 'clickPixel(' + i + ',' + j + ',color);');
+            column.setAttribute('onmousemove', `coordenadas( ${j},${i});`);
+            column.setAttribute('onclick', `clickPixel(${j}, ${i},color);`);
             line.appendChild(column);
         }
     }
@@ -23,18 +23,18 @@ function screen(x, y) {
 
 function pixelPaint(x, y) {
     if (x >= 0 && y >= 0 && x < xScreen && y < yScreen) {
-        let pixel = document.getElementsByClassName('row')[x].getElementsByClassName('column')[y];
+        let pixel = document.getElementsByClassName('row')[y].getElementsByClassName('column')[x];
         pixel.style.backgroundColor = color;
     }
 }
 
 function cleanPixel(x, y) {
-    let pixel = document.getElementsByClassName('row')[x].getElementsByClassName('column')[y];
+    let pixel = document.getElementsByClassName('row')[y].getElementsByClassName('column')[x];
     pixel.style.backgroundColor = 'white';
 }
 
 function clickPixel(x, y) {
-    if (document.getElementsByClassName('row')[x].getElementsByClassName('column')[y].style.backgroundColor === 'white') {
+    if (document.getElementsByClassName('row')[y].getElementsByClassName('column')[x].style.backgroundColor === 'white') {
         pixelPaint(x, y);
     } else {
         cleanPixel(x, y);
@@ -58,7 +58,7 @@ function numberValueById(x) {
 }
 
 function coordenadas(x, y) {
-    document.getElementById('coordenadas').innerHTML = 'COORDENADAS (' + (x) + ',' + (y) + ')';
+    document.getElementById('coordenadas').innerHTML = `COORDENADAS (${x},${y})`;
 
 }
 // =========== ALGORITMOS GRAFICOS ==================
@@ -102,7 +102,7 @@ function circlePoints(cx, cy, x, y) {
     }
 }
 
-function circulo(xCenter, yCenter, radius) {
+function circle(xCenter, yCenter, radius) {
     let x = 0;
     let y = radius;
     let p = (5 - radius * 4) / 4;
@@ -121,6 +121,7 @@ function circulo(xCenter, yCenter, radius) {
 }
 
 //Curva de Belzie
+//Quadratico
 function bezierQuadratic(x1, y1, x2, y2, x3, y3) {
     console.log(`P1(${x1},${y1})`);
     console.log(`P2(${x2},${y2})`);
@@ -135,6 +136,7 @@ function bezierQuadratic(x1, y1, x2, y2, x3, y3) {
     } 
 } 
 
+//Cubico
 function bezierCubic(x1, y1, x2, y2, x3, y3,x4,y4) {
     console.log(`P1(${x1},${y1})`);
     console.log(`P2(${x2},${y2})`);
