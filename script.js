@@ -65,14 +65,14 @@ function coordenadas(x, y) {
 // Bresenham
 function bresenham(x0, y0, x1, y1) {
 
-    var dx = Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
-    var dy = Math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
-    var err = (dx > dy ? dx : -dy) / 2;
+    let dx = Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
+    let dy = Math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
+    let err = (dx > dy ? dx : -dy) / 2;
 
     while (true) {
         pixelPaint(x0, y0);
         if (x0 === x1 && y0 === y1) break;
-        var e2 = err;
+        let e2 = err;
         if (e2 > -dx) { err -= dy; x0 += sx; }
         if (e2 < dy) { err += dx; y0 += sy; }
     }
@@ -126,29 +126,39 @@ function bezierQuadratic(x1, y1, x2, y2, x3, y3) {
     console.log(`P1(${x1},${y1})`);
     console.log(`P2(${x2},${y2})`);
     console.log(`P3(${x3},${y3})`);
-    for(let t = 0 ; t <= 1 ; t += 0.001) 
-    { 
-        let xu = Math.pow(1-t,2)*x1 + 2*t*(1-t)*x2 + Math.pow(t,2)*x3; 
-        let yu = Math.pow(1-t,2)*y1 + 2*t*(1-t)*y2 + Math.pow(t,2)*y3; 
-        
-        console.table(Math.round(xu) , Math.round(yu)) ; 
-        pixelPaint(Math.round(xu) , Math.round(yu)) ; 
-    } 
-} 
+    for (let t = 0; t <= 1; t += 0.001) {
+        let xu = Math.pow(1 - t, 2) * x1 + 2 * t * (1 - t) * x2 + Math.pow(t, 2) * x3;
+        let yu = Math.pow(1 - t, 2) * y1 + 2 * t * (1 - t) * y2 + Math.pow(t, 2) * y3;
+
+        console.table(Math.round(xu), Math.round(yu));
+        pixelPaint(Math.round(xu), Math.round(yu));
+    }
+}
 
 //Cubico
-function bezierCubic(x1, y1, x2, y2, x3, y3,x4,y4) {
+function bezierCubic(x1, y1, x2, y2, x3, y3, x4, y4) {
     console.log(`P1(${x1},${y1})`);
     console.log(`P2(${x2},${y2})`);
     console.log(`P3(${x3},${y3})`);
     console.log(`P4(${x4},${y4})`);
-    for(let t = 0 ; t <= 1 ; t += 0.001) 
-    { 
-        let xu = Math.pow(1-t,3)*x1 + 3*t*Math.pow(1-t,2)*x2 + 3*Math.pow(t,2)*(1-t)*x3 + Math.pow(t,3)*x4;
+    for (let t = 0; t <= 1; t += 0.001) {
+        let xu = Math.pow(1 - t, 3) * x1 + 3 * t * Math.pow(1 - t, 2) * x2 + 3 * Math.pow(t, 2) * (1 - t) * x3 + Math.pow(t, 3) * x4;
+        let yu = Math.pow(1 - t, 3) * y1 + 3 * t * Math.pow(1 - t, 2) * y2 + 3 * Math.pow(t, 2) * (1 - t) * y3 + Math.pow(t, 3) * y4;
+        console.table(Math.round(xu), Math.round(yu));
+        pixelPaint(Math.round(xu), Math.round(yu));
+    }
+}
 
-        let yu = Math.pow(1-t,3)*y1 + 3*t*Math.pow(1-t,2)*y2 + 3*Math.pow(t,2)*(1-t)*y3 + Math.pow(t,3)*y4;
-        
-        console.table(Math.round(xu) , Math.round(yu)) ; 
-        pixelPaint(Math.round(xu) , Math.round(yu)) ; 
-    } 
-} 
+function poligonoPaint(p) { //recebe como algumento um array bi-dimensional com as coordenadas dos pontos no polighono.
+
+    for (let count = 0; count < p.length; count++) {
+
+        if (count != p.length - 1) {
+            bresenham(p[count][0], p[count][1], p[count + 1][0], p[count + 1][1]);
+        } 
+        else {
+            bresenham(p[0][0], p[0][1], p[p.length-1][0], p[p.length-1][1]);
+        }
+
+    }
+}
