@@ -10,7 +10,9 @@ Os algoritmos que devem ser implementados são os seguintes:
 [  ] Preencimento Scanline [0.85pts],
 [  ] Recorte de linha [0.85pts],
 [  ] Recorte de polígonos [0.85pts],
-[  ] Transformações (3 básicas [3x0.85pts]),
+[OK] Transformações - Translação [0.85pts],
+[OK] Transformações - Rotação [0.85pts],
+[  ] Transformações - Escala [0.85pts],
 [  ] Projeções Ortográficas [0.85pts] e
 [  ] Projeções Perspectivas [0.85pts]).
 -->
@@ -43,6 +45,9 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <label for="color">COR</label>
                     <input class="form-txt" type="color" id="color">
                     <input class="form-btn btn-positive" type="button" value="OK" onclick="color = valueById('color');">
+                    <label for="fill">FILL</label>
+                    <input class="form-txt" type="color" id="fill">
+                    <input class="form-btn btn-positive" type="button" value="OK" onclick="fill = valueById('fill');">
                 </div>
                 <div class="container">
                     <label>LINHA DE BRESENHAM</label><br>
@@ -68,6 +73,37 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <input class="form-btn btn-positive" type="button" value="PLOTAR"
                         onclick="circle(numberValueById('raio-center-eixoX'),numberValueById('raio-center-eixoY'),numberValueById('raio'))">
                 </div>
+            </th>
+            <th>
+                <div class="container">
+                        <label>POLIGONO</label><br>
+                        <input class="form-btn btn-positive" type="button" value="NOVO"
+                            onclick="poligono = []">
+                        <input class="form-btn btn-positive" type="button" value="DESENHA"
+                        onclick="poligonoPaint(poligono);">
+                    </div>
+                    <div class="container">
+                            <label>TRANSLAÇÃO</label><br>
+                            <label for="translado-eixoX">X</label>
+                            <input class="form-txt" type="text" id="translado-eixoX">
+                            <label for="translado-eixoY">Y</label>
+                            <input class="form-txt" type="text" id="translado-eixoY">
+                            <input class="form-btn btn-positive" type="button" value="TRANSLAR"
+                                onclick="poligonoClean(poligono);
+                                poligonoTranslado(poligono,numberValueById('translado-eixoX'),numberValueById('translado-eixoY'))
+                                poligonoPaint(poligono)">
+                    </div>
+                    <div class="container">
+                            <label>ESCALA</label><br>
+                            <label for="escala-eixoX">X</label>
+                            <input class="form-txt" type="text" id="escala-eixoX">
+                            <label for="escala-eixoY">Y</label>
+                            <input class="form-txt" type="text" id="escala-eixoY">
+                            <input class="form-btn btn-positive" type="button" value="REDIMENSIONAR"
+                                onclick="poligonoClean(poligono);
+                                poligonoEscala(poligono,numberValueById('escala-eixoX'),numberValueById('escala-eixoY'))
+                                poligonoPaint(poligono)">
+                    </div>
             </th>
             <th>
                 <div class="container">
@@ -132,12 +168,14 @@ Os algoritmos que devem ser implementados são os seguintes:
     </table>
     <script>
         //declaração do tamanho da tela de desenho
-        var xScreen = 40;
-        var yScreen = 40;
+        var xScreen = 50;
+        var yScreen = 50;
         //chama a função que cria a tela
         screen(xScreen, yScreen);
         //cria a variavel global de cor
         var color = 'black';
+        var fill = 'red';
+        var poligono = [];
     </script>
 </body>
 
