@@ -24,6 +24,7 @@ Os algoritmos que devem ser implementados são os seguintes:
     <title>Graphic Simulator 2000</title>
     <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src="script.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
 </head>
 
 <body>
@@ -32,25 +33,26 @@ Os algoritmos que devem ser implementados são os seguintes:
         <tr>
             <th>
                 <div id="screen"></div><!--TELA-->
-            </th>
-            <th>
-                <div class="container"><!--COORDENADAS-->
+                <div class="coordenadas"><!--COORDENADAS-->
                     <label id="coordenadas">COORDENADAS</label>
                 </div>
-                <div class="container"><!--LIMPA TELA-->
+            </th>
+            <th>
+
+                <div class="container-small"><!--LIMPA TELA-->
                     <input class="form-btn btn-negative" type="button" value="LIMPAR TELA"
                         onclick="screenClean(xScreen,yScreen);">
                 </div>
-                <div class="container"><!--COR (CONTORNO E PRENCHIMENTO)-->
+                <div class="container-small"><!--COR (CONTORNO E PRENCHIMENTO)-->
                     <label for="color">COR</label>
                     <input class="form-txt" type="color" id="color">
-                    <input class="form-btn btn-positive" type="button" value="OK" onclick="color = valueById('color');">
+                    <input class="form-btn btn-positive" type="button" value="OK" onclick="color = valueById('color');"><br>
                     <label for="fill">FILL</label>
                     <input class="form-txt" type="color" id="fill">
                     <input class="form-btn btn-positive" type="button" value="OK" onclick="fill = valueById('fill');">
                 </div>
-                <div class="container"><!--BRESENHAM-->
-                    <label>LINHA DE BRESENHAM</label><br>
+                <div class="container-small"><!--BRESENHAM-->
+                    <label>BRESENHAM</label><br>
                     <label for="eixoX1">X1</label>
                     <input class="form-txt" type="text" id="eixoX1">
                     <label for="eixoY1">Y1</label>
@@ -59,10 +61,10 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <input class="form-txt" type="text" id="eixoX2">
                     <label for="eixoY2">Y2</label>
                     <input class="form-txt" type="text" id="eixoY2"><br>
-                    <input class="form-btn btn-positive" type="button" value="PLOTAR"
+                    <input class="form-btn btn-positive" type="button" value="RASTERIZAR"
                         onclick="bresenham(numberValueById('eixoX1'),numberValueById('eixoY1'),numberValueById('eixoX2'),numberValueById('eixoY2'))">
                 </div>
-                <div class="container"><!--CIRCULO-->
+                <div class="container-small"><!--CIRCULO-->
                     <label>CIRCULO</label><br>
                     <label for="raio-center-eixoX">X</label>
                     <input class="form-txt" type="text" id="raio-center-eixoX">
@@ -70,45 +72,45 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <input class="form-txt" type="text" id="raio-center-eixoY">
                     <label for="raio">RAIO</label>
                     <input class="form-txt" type="text" id="raio"><br>
-                    <input class="form-btn btn-positive" type="button" value="PLOTAR"
+                    <input class="form-btn btn-positive" type="button" value="RASTERIZAR"
                         onclick="circle(numberValueById('raio-center-eixoX'),numberValueById('raio-center-eixoY'),numberValueById('raio'))">
                 </div>
             </th>
             <th>
-                <div class="container"><!--POLIGONO-->
+                <div class="container-small"><!--POLIGONO-->
                     <label>POLIGONO</label><br>
-                    <input class="form-btn btn-positive" type="button" value="NOVO" onclick="poligono = []">
-                    <input class="form-btn btn-positive" type="button" value="DESENHA"
+                    <input class="form-btn btn-positive" type="button" value="CRIAR NOVO" onclick="poligono = []">
+                    <input class="form-btn btn-positive" type="button" value="RASTERIZAR"
                         onclick="poligonoPaint(poligono);">
                 </div>
-                <div class="container"><!--TRANSLAÇÃO-->
+                <div class="container-small"><!--TRANSLAÇÃO-->
                     <label>TRANSLAÇÃO</label><br>
                     <label for="translado-eixoX">X</label>
                     <input class="form-txt" type="text" id="translado-eixoX">
                     <label for="translado-eixoY">Y</label>
-                    <input class="form-txt" type="text" id="translado-eixoY">
+                    <input class="form-txt" type="text" id="translado-eixoY"><br>
                     <input class="form-btn btn-positive" type="button" value="TRANSLAR" onclick="poligonoClean(poligono);
                                 poligonoTranslado(poligono,numberValueById('translado-eixoX'),numberValueById('translado-eixoY'))
                                 poligonoPaint(poligono)">
                 </div>
-                <div class="container"><!--ESCALA-->
+                <div class="container-small"><!--ESCALA-->
                     <label>ESCALA</label><br>
                     <label for="escala-eixoX">X</label>
                     <input class="form-txt" type="text" id="escala-eixoX">
                     <label for="escala-eixoY">Y</label>
-                    <input class="form-txt" type="text" id="escala-eixoY">
+                    <input class="form-txt" type="text" id="escala-eixoY"><br>
                     <input class="form-btn btn-positive" type="button" value="REDIMENSIONAR" onclick="poligonoClean(poligono);
                                 poligonoEscala(poligono,numberValueById('escala-eixoX'),numberValueById('escala-eixoY'))
                                 poligonoPaint(poligono)">
                 </div>
-                <div class="container"><!--ROTAÇÃO-->
+                <div class="container-small"><!--ROTAÇÃO-->
                     <label>ROTAÇÃO</label><br>
                     <label for="rotacao-eixoX">X</label>
                     <input class="form-txt" type="text" id="rotacao-eixoX">
                     <label for="rotacao-eixoY">Y</label>
-                    <input class="form-txt" type="text" id="rotacao-eixoY">
-                    <label for="rotacao-angle">Ao</label>
-                    <input class="form-txt" type="text" id="rotacao-angle">
+                    <input class="form-txt" type="text" id="rotacao-eixoY"><br>
+                    <label for="rotacao-angle">ÂNGULO</label>
+                    <input class="form-txt" type="text" id="rotacao-angle"><br>
                     <input class="form-btn btn-positive" type="button" value="ROTACIONAR" 
                        onclick="poligonoClean(poligono);
                                 poligonoRotate(poligono,numberValueById('rotacao-eixoX'),numberValueById('rotacao-eixoY'),numberValueById('rotacao-angle'))
@@ -117,7 +119,7 @@ Os algoritmos que devem ser implementados são os seguintes:
 
             </th>
             <th>
-                <div class="container"><!--BÉZIER QUADRATICO-->
+                <div class="container-small"><!--BÉZIER QUADRATICO-->
                     <label>BÉZIER QUADRATICO</label><br>
                     <label for="bezier-quadratic-eixoX1">X1</label>
                     <input class="form-txt" type="text" id="bezier-quadratic-eixoX1">
@@ -137,12 +139,12 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <label for="bezier-quadratic-eixoY3">Y3</label>
                     <input class="form-txt" type="text" id="bezier-quadratic-eixoY3"><br>
 
-                    <input class="form-btn btn-positive" type="button" value="PLOTAR"
+                    <input class="form-btn btn-positive" type="button" value="RASTERIZAR"
                         onclick="bezierQuadratic(numberValueById('bezier-quadratic-eixoX1'),numberValueById('bezier-quadratic-eixoY1'),
                                                  numberValueById('bezier-quadratic-eixoX2'),numberValueById('bezier-quadratic-eixoY2'),
                                                  numberValueById('bezier-quadratic-eixoX3'),numberValueById('bezier-quadratic-eixoY3'))">
                 </div>
-                <div class="container"><!--BÉZIER CUBICO-->
+                <div class="container-small"><!--BÉZIER CUBICO-->
                     <label>BÉZIER CUBICO</label><br>
                     <label for="eixoX1">X1</label>
                     <input class="form-txt" type="text" id="bezier-cubic-eixoX1">
@@ -168,7 +170,7 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <label for="eixoY4">Y4</label>
                     <input class="form-txt" type="text" id="bezier-cubic-eixoY4"><br>
 
-                    <input class="form-btn btn-positive" type="button" value="PLOTAR"
+                    <input class="form-btn btn-positive" type="button" value="RASTERIZAR"
                         onclick="bezierCubic(numberValueById('bezier-cubic-eixoX1'),numberValueById('bezier-cubic-eixoY1'),
                                              numberValueById('bezier-cubic-eixoX2'),numberValueById('bezier-cubic-eixoY2'),
                                              numberValueById('bezier-cubic-eixoX3'),numberValueById('bezier-cubic-eixoY3'),

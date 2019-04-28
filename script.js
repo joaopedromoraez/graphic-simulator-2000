@@ -15,7 +15,9 @@ function screen(x, y) {
             column.style.width = '10px';
             column.style.height = '10px';
             column.setAttribute('onmousemove', `coordenadas( ${j},${i});`);
-            column.setAttribute('onclick', `clickPixel(${j}, ${i},color); poligonoPoint( ${j},${i});`);
+            column.setAttribute('onclick', `pixelPaint(${j}, ${i}); poligonoPoint( ${j},${i});`);
+            column.setAttribute('ondblclick', `cleanPixel(${j}, ${i});`);
+
             line.appendChild(column);
         }
     }
@@ -32,14 +34,6 @@ function cleanPixel(x, y) {
     if (x >= 0 && y >= 0 && x < xScreen && y < yScreen) {
         let pixel = document.getElementsByClassName('row')[y].getElementsByClassName('column')[x];
         pixel.style.backgroundColor = 'white';
-    }
-}
-
-function clickPixel(x, y) {
-    if (document.getElementsByClassName('row')[y].getElementsByClassName('column')[x].style.backgroundColor === 'white') {
-        pixelPaint(x, y);
-    } else {
-        cleanPixel(x, y);
     }
 }
 
