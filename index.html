@@ -12,7 +12,7 @@ Os algoritmos que devem ser implementados são os seguintes:
 [  ] Recorte de polígonos [0.85pts],
 [OK] Transformações - Translação [0.85pts],
 [OK] Transformações - Rotação [0.85pts],
-[  ] Transformações - Escala [0.85pts],
+[OK] Transformações - Escala [0.85pts],
 [  ] Projeções Ortográficas [0.85pts] e
 [  ] Projeções Perspectivas [0.85pts]).
 -->
@@ -101,6 +101,20 @@ Os algoritmos que devem ser implementados são os seguintes:
                                 poligonoEscala(poligono,numberValueById('escala-eixoX'),numberValueById('escala-eixoY'))
                                 poligonoPaint(poligono)">
                 </div>
+                <div class="container"><!--ROTAÇÃO-->
+                    <label>ROTAÇÃO</label><br>
+                    <label for="rotacao-eixoX">X</label>
+                    <input class="form-txt" type="text" id="rotacao-eixoX">
+                    <label for="rotacao-eixoY">Y</label>
+                    <input class="form-txt" type="text" id="rotacao-eixoY">
+                    <label for="rotacao-angle">Ao</label>
+                    <input class="form-txt" type="text" id="rotacao-angle">
+                    <input class="form-btn btn-positive" type="button" value="ROTACIONAR" 
+                       onclick="poligonoClean(poligono);
+                                poligonoRotate(poligono,numberValueById('rotacao-eixoX'),numberValueById('rotacao-eixoY'),numberValueById('rotacao-angle'))
+                                poligonoPaint(poligono)">
+                </div>
+
             </th>
             <th>
                 <div class="container"><!--BÉZIER QUADRATICO-->

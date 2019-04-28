@@ -206,7 +206,18 @@ function poligonoTranslado(p,x,y){
 //Transformação - Escala
 function poligonoEscala(p,x,y){
     for (let count = 0; count < p.length; count++) {
-        p[count][0] = Math.round(p[count][0]*x);
-        p[count][1] = Math.round(p[count][1]*y);
+        if(x!=0){ p[count][0] = Math.round(p[count][0]*x);}
+        if(y!=0){ p[count][1] = Math.round(p[count][1]*y);}
     }
 }
+
+//Transformação - Rotação
+function poligonoRotate(p, x_pivot, y_pivot, angle)
+{
+    for (let i = 0; i < p.length; i++){
+        let x_shifted = p[i][0] - x_pivot;
+        let y_shifted = p[i][1] - y_pivot;
+        p[i][0] = Math.round(x_pivot + (x_shifted * Math.cos(angle*Math.PI/180) - y_shifted * Math.sin(angle*Math.PI/180)));
+        p[i][1] = Math.round(y_pivot + (x_shifted * Math.sin(angle*Math.PI/180) + y_shifted * Math.cos(angle*Math.PI/180)));
+    }
+} 
