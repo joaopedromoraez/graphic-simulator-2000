@@ -173,7 +173,6 @@ function poligonoPoint(x,y){
 
 function poligonoPaint(p) { //recebe como algumento um array bi-dimensional com as coordenadas dos pontos no polighono.
     for (let count = 0; count < p.length; count++) {
-
         if (count != p.length - 1) {
             bresenham(p[count][0], p[count][1], p[count + 1][0], p[count + 1][1]);
         } 
@@ -186,7 +185,6 @@ function poligonoPaint(p) { //recebe como algumento um array bi-dimensional com 
 
 function poligonoClean(p) { //recebe como algumento um array bi-dimensional com as coordenadas dos pontos no polighono.
     for (let count = 0; count < p.length; count++) {
-
         if (count != p.length - 1) {
             bresenhamClean(p[count][0], p[count][1], p[count + 1][0], p[count + 1][1]);
         } 
@@ -202,7 +200,6 @@ function poligonoTranslado(p,x,y){
     for (let count = 0; count < p.length; count++) {
         p[count][0] += x;
         p[count][1] += y;
-
     }
 }
 
