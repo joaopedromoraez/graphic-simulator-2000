@@ -58,7 +58,6 @@ function coordenadas(x, y) {
 
 }
 // =========== ALGORITMOS GRAFICOS ==================
-// Bresenham
 function bresenham(x0, y0, x1, y1) {
 
     let dx = Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
@@ -90,30 +89,31 @@ function bresenhamClean(x0, y0, x1, y1) {
 }
 
 //Circulo
-function circlePoints(cx, cy, x, y) {
-    if (x === 0) {
-        pixelPaint(cx, cy + y);
-        pixelPaint(cx, cy - y);
-        pixelPaint(cx + y, cy);
-        pixelPaint(cx - y, cy);
-    } else if (x === y) {
-        pixelPaint(cx + x, cy + y);
-        pixelPaint(cx - x, cy + y);
-        pixelPaint(cx + x, cy - y);
-        pixelPaint(cx - x, cy - y);
-    } else if (x < y) {
-        pixelPaint(cx + x, cy + y);
-        pixelPaint(cx - x, cy + y);
-        pixelPaint(cx + x, cy - y);
-        pixelPaint(cx - x, cy - y);
-        pixelPaint(cx + y, cy + x);
-        pixelPaint(cx - y, cy + x);
-        pixelPaint(cx + y, cy - x);
-        pixelPaint(cx - y, cy - x);
-    }
-}
-
 function circle(xCenter, yCenter, radius) {
+
+    function circlePoints(cx, cy, x, y) {
+        if (x === 0) {
+            pixelPaint(cx, cy + y);
+            pixelPaint(cx, cy - y);
+            pixelPaint(cx + y, cy);
+            pixelPaint(cx - y, cy);
+        } else if (x === y) {
+            pixelPaint(cx + x, cy + y);
+            pixelPaint(cx - x, cy + y);
+            pixelPaint(cx + x, cy - y);
+            pixelPaint(cx - x, cy - y);
+        } else if (x < y) {
+            pixelPaint(cx + x, cy + y);
+            pixelPaint(cx - x, cy + y);
+            pixelPaint(cx + x, cy - y);
+            pixelPaint(cx - x, cy - y);
+            pixelPaint(cx + y, cy + x);
+            pixelPaint(cx - y, cy + x);
+            pixelPaint(cx + y, cy - x);
+            pixelPaint(cx - y, cy - x);
+        }
+    }
+
     let x = 0;
     let y = radius;
     let p = (5 - radius * 4) / 4;
@@ -161,17 +161,17 @@ function bezierCubic(x1, y1, x2, y2, x3, y3, x4, y4) {
 }
 
 //Poligono
-function poligonoPoint(x,y){
-    poligono.push([x,y]);
+function poligonoPoint(x, y) {
+    poligono.push([x, y]);
 }
 
 function poligonoPaint(p) { //recebe como algumento um array bi-dimensional com as coordenadas dos pontos no polighono.
     for (let count = 0; count < p.length; count++) {
         if (count != p.length - 1) {
             bresenham(p[count][0], p[count][1], p[count + 1][0], p[count + 1][1]);
-        } 
+        }
         else {
-            bresenham(p[0][0], p[0][1], p[p.length-1][0], p[p.length-1][1]);
+            bresenham(p[0][0], p[0][1], p[p.length - 1][0], p[p.length - 1][1]);
         }
     }
     return console.table(p)
@@ -181,16 +181,16 @@ function poligonoClean(p) { //recebe como algumento um array bi-dimensional com 
     for (let count = 0; count < p.length; count++) {
         if (count != p.length - 1) {
             bresenhamClean(p[count][0], p[count][1], p[count + 1][0], p[count + 1][1]);
-        } 
+        }
         else {
-            bresenhamClean(p[0][0], p[0][1], p[p.length-1][0], p[p.length-1][1]);
+            bresenhamClean(p[0][0], p[0][1], p[p.length - 1][0], p[p.length - 1][1]);
         }
     }
     return console.table(p)
 }
 
 //Transformação - Translado
-function poligonoTranslado(p,x,y){
+function poligonoTranslado(p, x, y) {
     for (let count = 0; count < p.length; count++) {
         p[count][0] += x;
         p[count][1] += y;
@@ -198,20 +198,36 @@ function poligonoTranslado(p,x,y){
 }
 
 //Transformação - Escala
-function poligonoEscala(p,x,y){
+function poligonoEscala(p, x, y) {
+    //VARIAVEIS PARA COREÇAO DE DESLOCAMENTO
+    let listax = []; listay = [];
+
+    for (let x = 0; x < p.length; x++) {
+        listax.push(parseInt(p[x][0]));
+        listay.push(parseInt(p[x][1]));
+
+    }
+
+    let originX = listax.reduce(function (a, b) {
+        return Math.min(a, b);
+    });
+
+    let originY = listay.reduce(function (a, b) {
+        return Math.min(a, b);
+    });
+    //ALGORITMO DE ESCALA [COM CORREÇAO DE DISTANCIA]
     for (let count = 0; count < p.length; count++) {
-        if(x!=0){ p[count][0] = Math.round(p[count][0]*x);}
-        if(y!=0){ p[count][1] = Math.round(p[count][1]*y);}
+        if (x != 0) { p[count][0] = originX + (Math.round((p[count][0] - originX) * x)); }
+        if (y != 0) { p[count][1] = originY + (Math.round((p[count][1] - originY) * y)); }
     }
 }
 
 //Transformação - Rotação
-function poligonoRotate(p, x_pivot, y_pivot, angle)
-{
-    for (let i = 0; i < p.length; i++){
+function poligonoRotate(p, x_pivot, y_pivot, angle) {
+    for (let i = 0; i < p.length; i++) {
         let x_shifted = p[i][0] - x_pivot;
         let y_shifted = p[i][1] - y_pivot;
-        p[i][0] = Math.round(x_pivot + (x_shifted * Math.cos(angle*Math.PI/180) - y_shifted * Math.sin(angle*Math.PI/180)));
-        p[i][1] = Math.round(y_pivot + (x_shifted * Math.sin(angle*Math.PI/180) + y_shifted * Math.cos(angle*Math.PI/180)));
+        p[i][0] = Math.round(x_pivot + (x_shifted * Math.cos(angle * Math.PI / 180) - y_shifted * Math.sin(angle * Math.PI / 180)));
+        p[i][1] = Math.round(y_pivot + (x_shifted * Math.sin(angle * Math.PI / 180) + y_shifted * Math.cos(angle * Math.PI / 180)));
     }
-} 
+}
