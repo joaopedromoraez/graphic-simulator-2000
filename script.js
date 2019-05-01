@@ -11,7 +11,7 @@ function screen(x, y) {
         for (let j = 0; j < x; j++) {
             let column = document.createElement('th');
             column.className = 'column';
-            column.style.backgroundColor = "white";
+            column.style.backgroundColor = "#fff";
             column.style.width = '10px';
             column.style.height = '10px';
             column.setAttribute('onmousemove', `coordenadas( ${j},${i});`);
@@ -23,18 +23,35 @@ function screen(x, y) {
     }
 }
 
-function pixelPaint(x, y) {
+function pixelPaint(x, y, cor = color) {
     if (x >= 0 && y >= 0 && x < xScreen && y < yScreen) {
         let pixel = document.getElementsByClassName('row')[y].getElementsByClassName('column')[x];
-        pixel.style.backgroundColor = color;
+        pixel.style.backgroundColor = cor;
     }
 }
 
 function cleanPixel(x, y) {
     if (x >= 0 && y >= 0 && x < xScreen && y < yScreen) {
         let pixel = document.getElementsByClassName('row')[y].getElementsByClassName('column')[x];
-        pixel.style.backgroundColor = 'white';
+        pixel.style.backgroundColor = '#ffffff';
     }
+}
+
+function rgbToHex(col){
+    if(col.charAt(0)=='r'){
+        col=col.replace('rgb(','').replace(')','').split(',');
+        var r=parseInt(col[0], 10).toString(16);
+        var g=parseInt(col[1], 10).toString(16);
+        var b=parseInt(col[2], 10).toString(16);
+        r=r.length==1?'0'+r:r; g=g.length==1?'0'+g:g; b=b.length==1?'0'+b:b;
+        var colHex='#'+r+g+b;
+        return colHex;
+    }
+}
+
+function pixelColorSearch(x, y) {
+    let pixel = document.getElementsByClassName('row')[y].getElementsByClassName('column')[x];
+    return rgbToHex(pixel.style.backgroundColor);
 }
 
 function screenClean(i, j) { //limpa todos os pixels da tela
@@ -230,4 +247,23 @@ function poligonoRotate(p, x_pivot, y_pivot, angle) {
         p[i][0] = Math.round(x_pivot + (x_shifted * Math.cos(angle * Math.PI / 180) - y_shifted * Math.sin(angle * Math.PI / 180)));
         p[i][1] = Math.round(y_pivot + (x_shifted * Math.sin(angle * Math.PI / 180) + y_shifted * Math.cos(angle * Math.PI / 180)));
     }
+}
+
+//prenchimento
+//recursivo
+function floodFill( x,  y,  fill_color, boundary_color)
+{
+    if(pixelColorSearch(x, y) != boundary_color && pixelColorSearch(x, y) != fill_color)
+    {
+        pixelPaint(x, y, fill_color);
+        floodFill(x + 1, y, fill_color, boundary_color);
+        floodFill(x, y + 1, fill_color, boundary_color);
+        floodFill(x - 1, y, fill_color, boundary_color);
+        floodFill(x, y - 1, fill_color, boundary_color);
+    }
+}
+
+//scanline
+function fillScanline(color,fill){
+    return console.log('Scan line não implementado');
 }

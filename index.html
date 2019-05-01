@@ -6,7 +6,7 @@ Os algoritmos que devem ser implementados são os seguintes:
 [OK] Bresenham [0.85pts],
 [OK] Círculos [0.85pts],
 [OK] Curvas Bezier [0.85pts],
-[  ] Preencimento Recursivo [0.85pts],
+[OK] Preencimento Recursivo [0.85pts],
 [  ] Preencimento Scanline [0.85pts],
 [  ] Recorte de linha [0.85pts],
 [  ] Recorte de polígonos [0.85pts],
@@ -77,6 +77,23 @@ Os algoritmos que devem ser implementados são os seguintes:
                 </div>
             </th>
             <th>
+                <div class="container-small"><!--PRENCHIMENTO SCANLINE-->
+                    <label>PREENCHIMENTO SCANLINE</label><br>
+                    <input class="form-btn btn-positive" type="button" value="PREENCHER"
+                        onclick="fillScanline(color,fill);">
+                </div>
+                <div class="container-small"><!--PRENCHIMENTO RECURSIVO-->
+                    <label>PREENCHIMENTO RECURSIVO</label><br>
+                    <label for="fill-eixoX">X</label>
+                    <input class="form-txt" type="text" id="fill-eixoX">
+                    <label for="fill-eixoY">Y</label>
+                    <input class="form-txt" type="text" id="fill-eixoY"><br>
+                    <input class="form-btn btn-positive" type="button" value="PREENCHER" 
+                    onclick="floodFill(numberValueById('fill-eixoX'),numberValueById('fill-eixoY'),fill,color);">
+                </div>
+
+            </th>
+            <th>
                 <div class="container-small"><!--POLIGONO-->
                     <label>POLIGONO</label><br>
                     <input class="form-btn btn-positive" type="button" value="CRIAR NOVO" onclick="poligono = []">
@@ -89,9 +106,9 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <input class="form-txt" type="text" id="translado-eixoX">
                     <label for="translado-eixoY">Y</label>
                     <input class="form-txt" type="text" id="translado-eixoY"><br>
-                    <input class="form-btn btn-positive" type="button" value="TRANSLAR" onclick="poligonoClean(poligono);
+                    <input class="form-btn btn-positive" type="button" value="TRANSLAR" onclick="screenClean(xScreen,yScreen);
                                 poligonoTranslado(poligono,numberValueById('translado-eixoX'),numberValueById('translado-eixoY'))
-                                poligonoPaint(poligono)">
+                                poligonoPaint(poligono);fillScanline(color,fill);">
                 </div>
                 <div class="container-small"><!--ESCALA-->
                     <label>ESCALA</label><br>
@@ -99,9 +116,9 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <input class="form-txt" type="text" id="escala-eixoX">
                     <label for="escala-eixoY">Y</label>
                     <input class="form-txt" type="text" id="escala-eixoY"><br>
-                    <input class="form-btn btn-positive" type="button" value="REDIMENSIONAR" onclick="poligonoClean(poligono);
+                    <input class="form-btn btn-positive" type="button" value="REDIMENSIONAR" onclick="screenClean(xScreen,yScreen);
                                 poligonoEscala(poligono,numberValueById('escala-eixoX'),numberValueById('escala-eixoY'))
-                                poligonoPaint(poligono)">
+                                poligonoPaint(poligono);fillScanline(color,fill);">
                 </div>
                 <div class="container-small"><!--ROTAÇÃO-->
                     <label>ROTAÇÃO</label><br>
@@ -112,9 +129,9 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <label for="rotacao-angle">ÂNGULO</label>
                     <input class="form-txt" type="text" id="rotacao-angle"><br>
                     <input class="form-btn btn-positive" type="button" value="ROTACIONAR" 
-                       onclick="poligonoClean(poligono);
+                       onclick="screenClean(xScreen,yScreen);
                                 poligonoRotate(poligono,numberValueById('rotacao-eixoX'),numberValueById('rotacao-eixoY'),numberValueById('rotacao-angle'))
-                                poligonoPaint(poligono)">
+                                poligonoPaint(poligono);fillScanline(color,fill);">
                 </div>
 
             </th>
@@ -186,9 +203,9 @@ Os algoritmos que devem ser implementados são os seguintes:
         //chama a função que cria a tela
         screen(xScreen, yScreen);
         //cria a variavel global de cor de contorno
-        var color = 'black';
+        var color = '#000000';
         //cria a variavel global de prenchimento
-        var fill = 'red';
+        var fill = '#ff0000';
         //cria a variaveel global com os pontos do poligono
         var poligono = [];
     </script>
