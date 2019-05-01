@@ -1,5 +1,5 @@
 function screen(x, y) {
-    let table = document.createElement('table', 'screen');
+    let table = document.createElement('table');
     table.className = 'screen';
     document.getElementById('screen').appendChild(table);
 
