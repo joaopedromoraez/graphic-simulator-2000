@@ -384,6 +384,8 @@ function cohenSutherlandClip(x1, y1, x2, y2){
 } 
 
 //=========poligono [não terminado]
+/*
+
 const MAX_POINTS = 20; 
   
 // Returns x-value of point of intersectipn of two 
@@ -488,28 +490,4 @@ function suthHodgClip(poly_points[][2], poly_size, clipper_points[][2], clipper_
     }
 } 
   
-//Driver code 
-int main() 
-{ 
-    // Defining polygon vertices in clockwise order 
-    int poly_size = 3; 
-    int poly_points[20][2] = {{100,150}, {200,250}, 
-                              {300,200}}; 
-  
-    // Defining clipper polygon vertices in clockwise order 
-    // 1st Example with square clipper 
-    int clipper_size = 4; 
-    int clipper_points[][2] = {{150,150}, {150,200}, 
-                              {200,200}, {200,150} }; 
-  
-    // 2nd Example with triangle clipper 
-    /*int clipper_size = 3; 
-    int clipper_points[][2] = {{100,300}, {300,300}, 
-                                {200,100}};*/
-  
-    //Calling the clipping function 
-    suthHodgClip(poly_points, poly_size, clipper_points, 
-                 clipper_size); 
-  
-    return 0; 
-} 
+*/
