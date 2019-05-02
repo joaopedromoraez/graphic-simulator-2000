@@ -8,7 +8,7 @@ Os algoritmos que devem ser implementados são os seguintes:
 [OK] Curvas Bezier [0.85pts],
 [OK] Preencimento Recursivo [0.85pts],
 [  ] Preencimento Scanline [0.85pts],
-[  ] Recorte de linha [0.85pts],
+[OK] Recorte de linha [0.85pts],
 [  ] Recorte de polígonos [0.85pts],
 [OK] Transformações - Translação [0.85pts],
 [OK] Transformações - Rotação [0.85pts],
@@ -51,8 +51,8 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <input class="form-txt" type="color" id="fill">
                     <input class="form-btn btn-positive" type="button" value="OK" onclick="fill = valueById('fill');">
                 </div>
-                <div class="container-small"><!--BRESENHAM-->
-                    <label>BRESENHAM</label><br>
+                <div class="container-small"><!--LINHA-->
+                    <label>LINHA</label><br>
                     <label for="eixoX1">X1</label>
                     <input class="form-txt" type="text" id="eixoX1">
                     <label for="eixoY1">Y1</label>
@@ -62,7 +62,7 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <label for="eixoY2">Y2</label>
                     <input class="form-txt" type="text" id="eixoY2"><br>
                     <input class="form-btn btn-positive" type="button" value="RASTERIZAR"
-                        onclick="bresenham(numberValueById('eixoX1'),numberValueById('eixoY1'),numberValueById('eixoX2'),numberValueById('eixoY2'))">
+                        onclick="cohenSutherlandClip(numberValueById('eixoX1'),numberValueById('eixoY1'),numberValueById('eixoX2'),numberValueById('eixoY2'))">
                 </div>
                 <div class="container-small"><!--CIRCULO-->
                     <label>CIRCULO</label><br>
@@ -108,7 +108,7 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <input class="form-txt" type="text" id="translado-eixoY"><br>
                     <input class="form-btn btn-positive" type="button" value="TRANSLAR" onclick="screenClean(xScreen,yScreen);
                                 poligonoTranslado(poligono,numberValueById('translado-eixoX'),numberValueById('translado-eixoY'))
-                                poligonoPaint(poligono);fillScanline(color,fill);">
+                                poligonoPaint(poligono);">
                 </div>
                 <div class="container-small"><!--ESCALA-->
                     <label>ESCALA</label><br>
@@ -118,7 +118,7 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <input class="form-txt" type="text" id="escala-eixoY"><br>
                     <input class="form-btn btn-positive" type="button" value="REDIMENSIONAR" onclick="screenClean(xScreen,yScreen);
                                 poligonoEscala(poligono,numberValueById('escala-eixoX'),numberValueById('escala-eixoY'))
-                                poligonoPaint(poligono);fillScanline(color,fill);">
+                                poligonoPaint(poligono);">
                 </div>
                 <div class="container-small"><!--ROTAÇÃO-->
                     <label>ROTAÇÃO</label><br>
@@ -131,7 +131,7 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <input class="form-btn btn-positive" type="button" value="ROTACIONAR" 
                        onclick="screenClean(xScreen,yScreen);
                                 poligonoRotate(poligono,numberValueById('rotacao-eixoX'),numberValueById('rotacao-eixoY'),numberValueById('rotacao-angle'))
-                                poligonoPaint(poligono);fillScanline(color,fill);">
+                                poligonoPaint(poligono);">
                 </div>
 
             </th>

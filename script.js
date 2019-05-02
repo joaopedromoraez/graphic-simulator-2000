@@ -249,9 +249,9 @@ function poligonoRotate(p, x_pivot, y_pivot, angle) {
     }
 }
 
-//prenchimento
+//PREENCHIMENTO
 //recursivo
-function floodFill( x,  y,  fill_color, boundary_color)
+function floodFill(x,  y,  fill_color, boundary_color)
 {
     if(pixelColorSearch(x, y) != boundary_color && pixelColorSearch(x, y) != fill_color)
     {
@@ -267,3 +267,249 @@ function floodFill( x,  y,  fill_color, boundary_color)
 function fillScanline(color,fill){
     return console.log('Scan line não implementado');
 }
+
+//RECORTE
+//linha [Cohen-Sutherland]
+
+// Define os Códigos das Regiões
+const INSIDE = 0; // 0000 
+const LEFT = 1;   // 0001 
+const RIGHT = 2;  // 0010 
+const BOTTOM = 4; // 0100 
+const TOP = 8;    // 1000 
+
+// Define x_max, y_max e x_min, y_min para os 
+// retângulo de recorte. Como os pontos diagonais são
+// o suficiente para definir um retângulo 
+let x_max = 49;
+let y_max = 49;
+let x_min = 0;
+let y_min = 0;
+
+// Função para calcular o código da região para um point(x, y) 
+function computeCode(x, y){
+    // initialized as being inside  
+    let code = INSIDE;
+
+    if (x < x_min)       // à esquerda do retângulo
+        {code = LEFT;}
+    else if (x > x_max)  // à direita do retângulo 
+        {code = RIGHT;}
+    if (y < y_min)       // abaixo do retângulo 
+        {code = BOTTOM;}
+    else if (y > y_max)  // acima do retângulo 
+        {code = TOP;}
+
+    return code;
+}
+
+// Implementaçao do algoritmo de Cohen-Sutherland  
+// recorta a linha para os pontos P1 = (x2, y2) to P2 = (x2, y2) 
+function cohenSutherlandClip(x1, y1, x2, y2){
+    // Códigos de região de computação para P1, P2 
+    let code1 = computeCode(x1, y1);
+    let code2 = computeCode(x2, y2);
+
+    // Inicialize a linha como fora da janela retangular
+    let accept = false;
+
+    while (true) {
+        if ((code1 === 0) && (code2 === 0)) {
+            // Se ambos os terminais estiverem dentro do retângulo
+            accept = true;
+            //desenha a linha
+            bresenham(x1, y1, x2, y2);
+            break;
+        }
+        else if ((code1 !== 0) && (code2 !== 0)) {
+            // Se ambos os terminais estiverem fora do retângulo, na mesma região
+            break;
+        }
+        else {
+            // Algum segmento de linha está dentro do retângulo
+            let code_out, x, y;
+
+            // Pelo menos um endpoint está fora do retângulo, escolha.
+            if (code1 !== 0){
+                code_out = code1;
+            }else{
+                code_out = code2;
+            }
+            // Encontrar ponto de intersecção;
+            // usando as formulas: y = y1 + slope * (x - x1), 
+            // x = x1 + (1 / slope) * (y - y1) 
+            if (code_out === TOP) {
+                // o ponto está acima do retângulo do clipe
+                x = x1 + (x2 - x1) * (y_max - y1) / (y2 - y1);
+                y = y_max;
+            }
+            else if (code_out === BOTTOM) {
+                // o ponto está abaixo do retângulo
+                x = x1 + (x2 - x1) * (y_min - y1) / (y2 - y1);
+                y = y_min;
+            }
+            else if (code_out === RIGHT) {
+                // ponto é à direita do retângulo
+                y = y1 + (y2 - y1) * (x_max - x1) / (x2 - x1);
+                x = x_max;
+            }
+            else if (code_out === LEFT) {
+                // point está à esquerda do retângulo
+                y = y1 + (y2 - y1) * (x_min - x1) / (x2 - x1);
+                x = x_min;
+            }
+
+            // Agora o ponto de intersecção x, y é encontrado
+            // Substituímos o ponto fora do retângulo
+            // pelo ponto de intersecção
+            if (code_out === code1) {
+                x1 = x;
+                y1 = y;
+                code1 = computeCode(x1, y1);
+            }
+            else {
+                x2 = x;
+                y2 = y;
+                code2 = computeCode(x2, y2);
+            }
+            bresenham(x1, y1, x2, y2);
+        }
+    }
+    if (accept) {
+        console.log(`linha dentro nos pontos p1(${x1},${y1}) e p2(${x2},${y2})`);
+        //exibe onde a linha foi plotada
+    }else{
+        console.log('linha totalmente fora');
+    }
+} 
+
+//=========poligono [não terminado]
+const MAX_POINTS = 20; 
+  
+// Returns x-value of point of intersectipn of two 
+// lines 
+int x_intersect(x1, y1, x2, y2, x3, y3, x4, y4){ 
+    let num = (x1*y2 - y1*x2) * (x3-x4) - (x1-x2) * (x3*y4 - y3*x4); 
+    let den = (x1-x2) * (y3-y4) - (y1-y2) * (x3-x4); 
+    return num/den; 
+} 
+  
+// Returns y-value of point of intersectipn of 
+// two lines 
+function y_intersect(x1, y1, x2, y2, x3, y3, x4, y4){ 
+    let num = (x1*y2 - y1*x2) * (y3-y4) - (y1-y2) * (x3*y4 - y3*x4); 
+    let den = (x1-x2) * (y3-y4) - (y1-y2) * (x3-x4); 
+    return num/den; 
+} 
+  
+// This functions clips all the edges w.r.t one clip 
+// edge of clipping area 
+function clip(poly_points[][2], poly_size, x1, y1, x2, y2){ 
+    let new_points, new_poly_size = 0; 
+  
+    // (ix,iy),(kx,ky) are the co-ordinate values of 
+    // the points 
+    for (let i = 0; i < poly_size; i++){ 
+        // i and k form a line in polygon 
+        let k = (i+1) % poly_size; 
+        let ix = poly_points[i][0], iy = poly_points[i][1]; 
+        let kx = poly_points[k][0], ky = poly_points[k][1]; 
+  
+        // Calculating position of first point 
+        // w.r.t. clipper line 
+        let i_pos = (x2-x1) * (iy-y1) - (y2-y1) * (ix-x1); 
+  
+        // Calculating position of second point 
+        // w.r.t. clipper line 
+        let k_pos = (x2-x1) * (ky-y1) - (y2-y1) * (kx-x1); 
+  
+        // Case 1 : When both points are inside 
+        if (i_pos < 0  && k_pos < 0) 
+        { 
+            //Only second point is added 
+            new_points[new_poly_size][0] = kx; 
+            new_points[new_poly_size][1] = ky; 
+            new_poly_size++; 
+        }   
+        // Case 2: When only first point is outside 
+        else if (i_pos >= 0  && k_pos < 0) 
+        { 
+            // Point of intersection with edge 
+            // and the second point is added 
+            new_points[new_poly_size][0] = x_intersect(x1, y1, x2, y2, ix, iy, kx, ky); 
+            new_points[new_poly_size][1] = y_intersect(x1, y1, x2, y2, ix, iy, kx, ky); 
+            new_poly_size++; 
+            new_points[new_poly_size][0] = kx; 
+            new_points[new_poly_size][1] = ky; 
+            new_poly_size++; 
+        } 
+  
+        // Case 3: When only second point is outside 
+        else if (i_pos < 0  && k_pos >= 0) 
+        { 
+            //Only point of intersection with edge is added 
+            new_points[new_poly_size][0] = x_intersect(x1, y1, x2, y2, ix, iy, kx, ky); 
+            new_points[new_poly_size][1] = y_intersect(x1, y1, x2, y2, ix, iy, kx, ky); 
+            new_poly_size++; 
+        } 
+  
+        // Case 4: When both points are outside 
+        else
+        { 
+            //No points are added 
+        } 
+    } 
+  
+    // Copying new points into original array 
+    // and changing the no. of vertices 
+    poly_size = new_poly_size; 
+    for (let i = 0; i < poly_size; i++) 
+    { 
+        poly_points[i][0] = new_points[i][0]; 
+        poly_points[i][1] = new_points[i][1]; 
+    } 
+} 
+  
+// Implements Sutherland–Hodgman algorithm 
+function suthHodgClip(poly_points[][2], poly_size, clipper_points[][2], clipper_size) { 
+    //i and k are two consecutive indexes 
+    for (let i=0; i < clipper_size; i++) 
+    { 
+        let k = (i+1) % clipper_size; 
+  
+        // We pass the current array of vertices, it's size 
+        // and the end points of the selected clipper line 
+        clip(poly_points, poly_size, clipper_points[i][0], clipper_points[i][1], clipper_points[k][0], clipper_points[k][1]); 
+    } 
+  
+    // Printing vertices of clipped polygon 
+    for (let i = 0; i < poly_size; i++) {
+        console.log(poly_points[i][0],poly_points[i][1]);
+    }
+} 
+  
+//Driver code 
+int main() 
+{ 
+    // Defining polygon vertices in clockwise order 
+    int poly_size = 3; 
+    int poly_points[20][2] = {{100,150}, {200,250}, 
+                              {300,200}}; 
+  
+    // Defining clipper polygon vertices in clockwise order 
+    // 1st Example with square clipper 
+    int clipper_size = 4; 
+    int clipper_points[][2] = {{150,150}, {150,200}, 
+                              {200,200}, {200,150} }; 
+  
+    // 2nd Example with triangle clipper 
+    /*int clipper_size = 3; 
+    int clipper_points[][2] = {{100,300}, {300,300}, 
+                                {200,100}};*/
+  
+    //Calling the clipping function 
+    suthHodgClip(poly_points, poly_size, clipper_points, 
+                 clipper_size); 
+  
+    return 0; 
+} 
