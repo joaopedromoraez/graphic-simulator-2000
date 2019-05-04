@@ -32,26 +32,32 @@ Os algoritmos que devem ser implementados são os seguintes:
     <table>
         <tr>
             <th>
-                <div id="screen"></div><!--TELA-->
-                <div class="coordenadas"><!--COORDENADAS-->
+                <div id="screen"></div>
+                <!--TELA-->
+                <div class="coordenadas">
+                    <!--COORDENADAS-->
                     <label id="coordenadas">COORDENADAS</label>
                 </div>
             </th>
             <th>
 
-                <div class="container-small"><!--LIMPA TELA-->
+                <div class="container-small">
+                    <!--LIMPA TELA-->
                     <input class="form-btn btn-negative" type="button" value="LIMPAR TELA"
                         onclick="screenClean(xScreen,yScreen);">
                 </div>
-                <div class="container-small"><!--COR (CONTORNO E PRENCHIMENTO)-->
+                <div class="container-small">
+                    <!--COR (CONTORNO E PRENCHIMENTO)-->
                     <label for="color">BORDA</label><br>
                     <input class="form-txt" type="color" id="color">
-                    <input class="form-btn btn-positive" type="button" value="OK" onclick="color = valueById('color');"><br>
+                    <input class="form-btn btn-positive" type="button" value="OK"
+                        onclick="color = valueById('color');"><br>
                     <label for="fill">PREENCHIMENTO</label><br>
                     <input class="form-txt" type="color" id="fill">
                     <input class="form-btn btn-positive" type="button" value="OK" onclick="fill = valueById('fill');">
                 </div>
-                <div class="container-small"><!--LINHA-->
+                <div class="container-small">
+                    <!--LINHA-->
                     <label>LINHA</label><br>
                     <label for="eixoX1">X1</label>
                     <input class="form-txt" type="text" id="eixoX1">
@@ -64,7 +70,8 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <input class="form-btn btn-positive" type="button" value="RASTERIZAR"
                         onclick="cohenSutherlandClip(numberValueById('eixoX1'),numberValueById('eixoY1'),numberValueById('eixoX2'),numberValueById('eixoY2'))">
                 </div>
-                <div class="container-small"><!--CIRCULO-->
+                <div class="container-small">
+                    <!--CIRCULO-->
                     <label>CIRCULO</label><br>
                     <label for="raio-center-eixoX">X</label>
                     <input class="form-txt" type="text" id="raio-center-eixoX">
@@ -77,30 +84,52 @@ Os algoritmos que devem ser implementados são os seguintes:
                 </div>
             </th>
             <th>
-                <div class="container-small"><!--PRENCHIMENTO SCANLINE-->
+                <div class="container-small">
+                    <!--LISTA DE POLIGONOS-->
+                    <label>LISTA DE POLIGONOS</label><br>
+                    <div id="list-polygon"></div>
+                </div>
+                <div class="container-small">
+                        <!--RECORTE DE POLIGONO-->
+                        <label>RECORTE DE POLIGONO</label><br>
+                        <label for="polygon-subjetivo">POLIGONO</label>
+                        <input class="form-txt" type="text" id="polygon-subjetivo">
+                        <label for="polygon-clip">RECORTE</label>
+                        <input class="form-txt" type="text" id="polygon-clip"><br>
+                        <input class="form-btn btn-positive" type="button" value="RECORTAR" onclick="screenClean(xScreen,yScreen);
+                                    polygonClip(listPolygon[numberValueById('polygon-subjetivo')],listPolygon[numberValueById('polygon-clip')]);
+                                    ">
+                    </div>
+    
+                <div class="container-small">
+                    <!--PRENCHIMENTO SCANLINE-->
                     <label>PREENCHIMENTO SCANLINE</label><br>
                     <input class="form-btn btn-positive" type="button" value="PREENCHER"
                         onclick="fillScanline(color,fill);">
                 </div>
-                <div class="container-small"><!--PRENCHIMENTO RECURSIVO-->
+                <div class="container-small">
+                    <!--PRENCHIMENTO RECURSIVO-->
                     <label>PREENCHIMENTO RECURSIVO</label><br>
                     <label for="fill-eixoX">X</label>
                     <input class="form-txt" type="text" id="fill-eixoX">
                     <label for="fill-eixoY">Y</label>
                     <input class="form-txt" type="text" id="fill-eixoY"><br>
-                    <input class="form-btn btn-positive" type="button" value="PREENCHER" 
-                    onclick="floodFill(numberValueById('fill-eixoX'),numberValueById('fill-eixoY'),fill,color);">
+                    <input class="form-btn btn-positive" type="button" value="PREENCHER"
+                        onclick="floodFill(numberValueById('fill-eixoX'),numberValueById('fill-eixoY'),fill,color);">
                 </div>
 
             </th>
             <th>
-                <div class="container-small"><!--POLIGONO-->
+                <div class="container-small">
+                    <!--POLIGONO-->
                     <label>POLIGONO</label><br>
-                    <input class="form-btn btn-positive" type="button" value="CRIAR NOVO" onclick="poligono = []">
+                    <input class="form-btn btn-positive" type="button" value="ADD A LISTA"
+                        onclick="listPolygon.push(poligono); addPolygon(count);poligonoPaint(poligono);poligono = []; count++;">
                     <input class="form-btn btn-positive" type="button" value="RASTERIZAR"
                         onclick="poligonoPaint(poligono);">
                 </div>
-                <div class="container-small"><!--TRANSLAÇÃO-->
+                <div class="container-small">
+                    <!--TRANSLAÇÃO-->
                     <label>TRANSLAÇÃO</label><br>
                     <label for="translado-eixoX">X</label>
                     <input class="form-txt" type="text" id="translado-eixoX">
@@ -110,7 +139,8 @@ Os algoritmos que devem ser implementados são os seguintes:
                                 poligonoTranslado(poligono,numberValueById('translado-eixoX'),numberValueById('translado-eixoY'))
                                 poligonoPaint(poligono);">
                 </div>
-                <div class="container-small"><!--ESCALA-->
+                <div class="container-small">
+                    <!--ESCALA-->
                     <label>ESCALA</label><br>
                     <label for="escala-eixoX">X</label>
                     <input class="form-txt" type="text" id="escala-eixoX">
@@ -120,7 +150,8 @@ Os algoritmos que devem ser implementados são os seguintes:
                                 poligonoEscala(poligono,numberValueById('escala-eixoX'),numberValueById('escala-eixoY'))
                                 poligonoPaint(poligono);">
                 </div>
-                <div class="container-small"><!--ROTAÇÃO-->
+                <div class="container-small">
+                    <!--ROTAÇÃO-->
                     <label>ROTAÇÃO</label><br>
                     <label for="rotacao-eixoX">X</label>
                     <input class="form-txt" type="text" id="rotacao-eixoX">
@@ -128,15 +159,15 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <input class="form-txt" type="text" id="rotacao-eixoY"><br>
                     <label for="rotacao-angle">ÂNGULO</label>
                     <input class="form-txt" type="text" id="rotacao-angle"><br>
-                    <input class="form-btn btn-positive" type="button" value="ROTACIONAR" 
-                       onclick="screenClean(xScreen,yScreen);
+                    <input class="form-btn btn-positive" type="button" value="ROTACIONAR" onclick="screenClean(xScreen,yScreen);
                                 poligonoRotate(poligono,numberValueById('rotacao-eixoX'),numberValueById('rotacao-eixoY'),numberValueById('rotacao-angle'))
                                 poligonoPaint(poligono);">
                 </div>
 
             </th>
             <th>
-                <div class="container-small"><!--BÉZIER QUADRATICO-->
+                <div class="container-small">
+                    <!--BÉZIER QUADRATICO-->
                     <label>BÉZIER QUADRATICO</label><br>
                     <label for="bezier-quadratic-eixoX1">X1</label>
                     <input class="form-txt" type="text" id="bezier-quadratic-eixoX1">
@@ -161,7 +192,8 @@ Os algoritmos que devem ser implementados são os seguintes:
                                                  numberValueById('bezier-quadratic-eixoX2'),numberValueById('bezier-quadratic-eixoY2'),
                                                  numberValueById('bezier-quadratic-eixoX3'),numberValueById('bezier-quadratic-eixoY3'))">
                 </div>
-                <div class="container-small"><!--BÉZIER CUBICO-->
+                <div class="container-small">
+                    <!--BÉZIER CUBICO-->
                     <label>BÉZIER CUBICO</label><br>
                     <label for="eixoX1">X1</label>
                     <input class="form-txt" type="text" id="bezier-cubic-eixoX1">
@@ -198,16 +230,21 @@ Os algoritmos que devem ser implementados são os seguintes:
     </table>
     <script> //CONTEM AS VARIAVEIS GLOBAIS
         //declaração do tamanho da tela de desenho
-        var xScreen = 50;
-        var yScreen = 50;
+        let xScreen = 50;
+        let yScreen = 50;
         //chama a função que cria a tela
         screen(xScreen, yScreen);
         //cria a variavel global de cor de contorno
-        var color = '#000000';
+        let color = '#000000';
         //cria a variavel global de prenchimento
-        var fill = '#ff0000';
+        let fill = '#ff0000';
         //cria a variaveel global com os pontos do poligono
-        var poligono = [];
+        let poligono = [];
+        //cria lista que guaradara todos os poligonos 
+        let listPolygon = [];
+        //cria contador para enumerar itens de poligono
+        let count = 0;
+
     </script>
 </body>
 

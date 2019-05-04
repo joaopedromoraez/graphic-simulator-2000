@@ -382,42 +382,56 @@ function cohenSutherlandClip(x1, y1, x2, y2) {
 }
 
 //=========poligono [não terminado]
-function poligonoClip(subjectPolygon, clipPolygon) {
+function polygonClip(subjectPolygon, clipPolygon) {
+
     var cp1, cp2, s, e;
-    var inside = function(p) {
-      return ( (cp2[0] - cp1[0]) * (p[1] - cp1[1]) > (cp2[1] - cp1[1]) * (p[0] - cp1[0]) );
+    var inside = function (p) {
+        return (cp2[0] - cp1[0]) * (p[1] - cp1[1]) > (cp2[1] - cp1[1]) * (p[0] - cp1[0]);
     };
-
-    var intersection = function() {
-      var dc = [cp1[0] - cp2[0], cp1[1] - cp2[1]],
-        dp = [s[0] - e[0], s[1] - e[1]],
-        n1 = cp1[0] * cp2[1] - cp1[1] * cp2[0],
-        n2 = s[0] * e[1] - s[1] * e[0],
-        n3 = 1.0 / (dc[0] * dp[1] - dc[1] * dp[0]);
-      return [Math.round((n1 * dp[0] - n2 * dc[0]) * n3), Math.round((n1 * dp[1] - n2 * dc[1]) * n3)];
+    var intersection = function () {
+        var dc = [cp1[0] - cp2[0], cp1[1] - cp2[1]],
+            dp = [s[0] - e[0], s[1] - e[1]],
+            n1 = cp1[0] * cp2[1] - cp1[1] * cp2[0],
+            n2 = s[0] * e[1] - s[1] * e[0],
+            n3 = 1.0 / (dc[0] * dp[1] - dc[1] * dp[0]);
+        return [Math.round((n1 * dp[0] - n2 * dc[0]) * n3), Math.round((n1 * dp[1] - n2 * dc[1]) * n3)];
     };
-
     var outputList = subjectPolygon;
     cp1 = clipPolygon[clipPolygon.length - 1];
     for (j in clipPolygon) {
-      var cp2 = clipPolygon[j];
-      var inputList = outputList;
-      outputList = [];
-      s = inputList[inputList.length - 1]; //last on the input list
-      for (i in inputList) {
-        var e = inputList[i];
-        if (inside(e)) {
-          if (!inside(s)) {
-            outputList.push(intersection());
-          }
-          outputList.push(e);
-        } else if (inside(s)) {
-          outputList.push(intersection());
+        var cp2 = clipPolygon[j];
+        var inputList = outputList;
+        outputList = [];
+        s = inputList[inputList.length - 1]; //last on the input list
+        for (i in inputList) {
+            var e = inputList[i];
+            if (inside(e)) {
+                if (!inside(s)) {
+                    outputList.push(intersection());
+                }
+                outputList.push(e);
+            }
+            else if (inside(s)) {
+                outputList.push(intersection());
+            }
+            s = e;
         }
-        s = e;
-      }
-      cp1 = cp2;
+        cp1 = cp2;
     }
     console.table(outputList);
+    poligonoPaint(outputList)
+    listPolygon.push(outputList);
+    addPolygon(count,'RECORTADO');
     return outputList;
-  }  
+}
+
+function addPolygon(x,name = 'POLIGONO') {
+    var conteudo = document.createElement('input');
+    conteudo.value = `${name} ${x}`;
+    conteudo.type = 'button'
+    conteudo.className = 'form-btn btn-blue';
+    document.getElementById('list-polygon').appendChild(conteudo);
+    conteudo.addEventListener('click',function(){
+    poligono = listPolygon[x];
+    });
+}

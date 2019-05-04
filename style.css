@@ -117,6 +117,15 @@ label{
     outline: none;
 }
 
+.btn-blue{
+    background-color: rgb(7, 114, 255);
+    outline: none;
+}
+
+.btn-blue:active{
+	background-color: rgb(1, 68, 155);
+}
+
 .btn-positive:active{
 	background-color: rgb(0,100,0);
 }
