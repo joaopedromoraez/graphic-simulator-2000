@@ -283,8 +283,8 @@ function cohenSutherlandClip(x1, y1, x2, y2) {
     // Define x_max, y_max e x_min, y_min para os 
     // retângulo de recorte. Como os pontos diagonais são
     // o suficiente para definir um retângulo 
-    let x_max = xScreen;
-    let y_max = yScreen;
+    let x_max = xScreen - 1;
+    let y_max = yScreen - 1;
     let x_min = 0;
     let y_min = 0;
 
