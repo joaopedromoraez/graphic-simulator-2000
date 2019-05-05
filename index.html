@@ -13,7 +13,7 @@ Os algoritmos que devem ser implementados são os seguintes:
 [OK] Transformações - Translação [0.85pts],
 [OK] Transformações - Rotação [0.85pts],
 [OK] Transformações - Escala [0.85pts],
-[  ] Projeções Ortográficas [0.85pts] e
+[OK] Projeções Ortográficas [0.85pts] e
 [  ] Projeções Perspectivas [0.85pts]).
 -->
 
@@ -99,8 +99,7 @@ Os algoritmos que devem ser implementados são os seguintes:
                         <input class="form-btn btn-positive" type="button" value="RECORTAR" onclick="screenClean(xScreen,yScreen);
                                     polygonClip(listPolygon[numberValueById('polygon-subjetivo')],listPolygon[numberValueById('polygon-clip')]);
                                     ">
-                    </div>
-    
+                </div>
                 <div class="container-small">
                     <!--PRENCHIMENTO SCANLINE-->
                     <label>PREENCHIMENTO SCANLINE</label><br>
@@ -226,6 +225,38 @@ Os algoritmos que devem ser implementados são os seguintes:
                                              numberValueById('bezier-cubic-eixoX4'),numberValueById('bezier-cubic-eixoY4'))">
                 </div>
             </th>
+            <th>
+                <div class="container-small">
+                    <!--ROTAÇÃO 3D DE POLIGONO-->
+                    <label>ROTAÇÃO 3D PERSPECTIVA ORTOGRAFICA</label><br>
+                    <label for="rotate-eixoX">EIXO X</label>
+                    <input class="form-txt" type="text" id="rotate-eixoX"><br>
+                    <input class="form-btn btn-positive" type="button" value="ROTACIONAR" onclick="
+                    screenClean(xScreen,yScreen);
+                    let trans = [];
+                    trans = rotate3D_X(pontos,numberValueById('rotate-eixoX'));
+                    pontos = []; pontos = trans;
+                    poligono3dPrint(cubo3d(pontos))">
+
+                    <label for="rotate-eixoY">EIXO Y</label>
+                    <input class="form-txt" type="text" id="rotate-eixoY"><br>
+                    <input class="form-btn btn-positive" type="button" value="ROTACIONAR" onclick="
+                    screenClean(xScreen,yScreen);
+                    let trans = [];
+                    trans = rotate3D_Y(pontos,numberValueById('rotate-eixoY'));
+                    pontos = []; pontos = trans;
+                    poligono3dPrint(cubo3d(pontos))">
+
+                    <label for="rotate-eixoZ">EIXO Z</label>
+                    <input class="form-txt" type="text" id="rotate-eixoZ"><br>
+                    <input class="form-btn btn-positive" type="button" value="ROTACIONAR" onclick="
+                    screenClean(xScreen,yScreen);
+                    let trans = [];
+                    trans = rotate3D_Z(pontos,numberValueById('rotate-eixoZ'));
+                    pontos = []; pontos = trans;
+                    poligono3dPrint(cubo3d(pontos))">
+                </div>
+            </th>
         </tr>
     </table>
     <script> //CONTEM AS VARIAVEIS GLOBAIS
@@ -244,7 +275,17 @@ Os algoritmos que devem ser implementados são os seguintes:
         let listPolygon = [];
         //cria contador para enumerar itens de poligono
         let count = 0;
-
+        //pontos do poligono 3D
+        let pontos = [
+            [10,10,0,1],
+            [10,35,0,1],
+            [35,35,0,1],
+            [35,10,0,1],
+            [10,10,25,1],
+            [10,35,25,1],
+            [35,35,25,1],
+            [35,10,25,1]
+        ];
     </script>
 </body>
 

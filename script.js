@@ -269,41 +269,42 @@ function fillScanline(color, fill) {
 //RECORTE
 //linha [Cohen-Sutherland]
 
-// Define os Códigos das Regiões
-const INSIDE = 0; // 0000 
-const LEFT = 1;   // 0001 
-const RIGHT = 2;  // 0010 
-const BOTTOM = 4; // 0100 
-const TOP = 8;    // 1000 
-
-// Define x_max, y_max e x_min, y_min para os 
-// retângulo de recorte. Como os pontos diagonais são
-// o suficiente para definir um retângulo 
-let x_max = 49;
-let y_max = 49;
-let x_min = 0;
-let y_min = 0;
-
-// Função para calcular o código da região para um point(x, y) 
-function computeCode(x, y) {
-    // initialized as being inside  
-    let code = INSIDE;
-
-    if (x < x_min)       // à esquerda do retângulo
-    { code = LEFT; }
-    else if (x > x_max)  // à direita do retângulo 
-    { code = RIGHT; }
-    if (y < y_min)       // abaixo do retângulo 
-    { code = BOTTOM; }
-    else if (y > y_max)  // acima do retângulo 
-    { code = TOP; }
-
-    return code;
-}
-
 // Implementaçao do algoritmo de Cohen-Sutherland  
 // recorta a linha para os pontos P1 = (x2, y2) to P2 = (x2, y2) 
 function cohenSutherlandClip(x1, y1, x2, y2) {
+
+    // Define os Códigos das Regiões
+    const INSIDE = 0; // 0000 
+    const LEFT = 1;   // 0001 
+    const RIGHT = 2;  // 0010 
+    const BOTTOM = 4; // 0100 
+    const TOP = 8;    // 1000 
+
+    // Define x_max, y_max e x_min, y_min para os 
+    // retângulo de recorte. Como os pontos diagonais são
+    // o suficiente para definir um retângulo 
+    let x_max = xScreen;
+    let y_max = yScreen;
+    let x_min = 0;
+    let y_min = 0;
+
+    // Função para calcular o código da região para um point(x, y) 
+    function computeCode(x, y) {
+        // initialized as being inside  
+        let code = INSIDE;
+
+        if (x < x_min)       // à esquerda do retângulo
+        { code = LEFT; }
+        else if (x > x_max)  // à direita do retângulo 
+        { code = RIGHT; }
+        if (y < y_min)       // abaixo do retângulo 
+        { code = BOTTOM; }
+        else if (y > y_max)  // acima do retângulo 
+        { code = TOP; }
+
+        return code;
+    }
+
     // Códigos de região de computação para P1, P2 
     let code1 = computeCode(x1, y1);
     let code2 = computeCode(x2, y2);
@@ -434,4 +435,84 @@ function addPolygon(x,name = 'POLIGONO') {
     conteudo.addEventListener('click',function(){
     poligono = listPolygon[x];
     });
+}
+
+function cubo3d(pontos){ 
+    return [
+    [pontos[0],pontos[1],pontos[2],pontos[3]],
+    [pontos[4],pontos[5],pontos[6],pontos[7]],
+    [pontos[0],pontos[4],pontos[7],pontos[3]],
+    [pontos[1],pontos[5],pontos[6],pontos[2]],
+    [pontos[3],pontos[7],pontos[6],pontos[2]],
+    [pontos[0],pontos[4],pontos[5],pontos[1]]
+];}
+
+
+function poligono3dPrint(lista){
+    for(let x = 0; x < lista.length; x++){
+        poligonoPaint(lista[x]);
+    }
+}
+//ROTAÇAO DE POLIGONO 3D
+function rotate3D_X(poligono,angle){
+    let radius = angle * Math.PI / 180;
+    let matriz =[
+        [1,0,0,0],
+        [0,Math.cos(radius),-(Math.sin(radius)),0],
+        [0,Math.sin(radius),Math.cos(radius),0],
+        [0,0,0,1]
+    ];
+    let newpoints = [];
+    for(let x = 0; x < poligono.length; x++){
+        let vetorlocal = [];
+        vetorlocal.push( Math.round((matriz[0][0]*poligono[x][0]) + (matriz[0][1]*poligono[x][1]) + (matriz[0][2]*poligono[x][2]) + (matriz[0][3]*poligono[x][3])) );
+        vetorlocal.push( Math.round((matriz[1][0]*poligono[x][0]) + (matriz[1][1]*poligono[x][1]) + (matriz[1][2]*poligono[x][2]) + (matriz[1][3]*poligono[x][3])) );
+        vetorlocal.push( Math.round((matriz[2][0]*poligono[x][0]) + (matriz[2][1]*poligono[x][1]) + (matriz[2][2]*poligono[x][2]) + (matriz[2][3]*poligono[x][3])) );
+        vetorlocal.push( Math.round((matriz[3][0]*poligono[x][0]) + (matriz[3][1]*poligono[x][1]) + (matriz[3][2]*poligono[x][2]) + (matriz[3][3]*poligono[x][3])) );
+        newpoints.push(vetorlocal);
+    }
+    console.table(newpoints);
+    return newpoints;
+}
+
+function rotate3D_Y(poligono,angle){
+    let radius = angle * Math.PI / 180;
+    let matriz =[
+        [Math.cos(radius),0,Math.sin(radius),0],
+        [0,1,0,0],
+        [-(Math.sin(radius)),0,Math.cos(radius),0],
+        [0,0,0,1]
+    ];
+    let newpoints = [];
+    for(let x = 0; x < poligono.length; x++){
+        let vetorlocal = [];
+        vetorlocal.push( Math.round((matriz[0][0]*poligono[x][0]) + (matriz[0][1]*poligono[x][1]) + (matriz[0][2]*poligono[x][2]) + (matriz[0][3]*poligono[x][3])) );
+        vetorlocal.push( Math.round((matriz[1][0]*poligono[x][0]) + (matriz[1][1]*poligono[x][1]) + (matriz[1][2]*poligono[x][2]) + (matriz[1][3]*poligono[x][3])) );
+        vetorlocal.push( Math.round((matriz[2][0]*poligono[x][0]) + (matriz[2][1]*poligono[x][1]) + (matriz[2][2]*poligono[x][2]) + (matriz[2][3]*poligono[x][3])) );
+        vetorlocal.push( Math.round((matriz[3][0]*poligono[x][0]) + (matriz[3][1]*poligono[x][1]) + (matriz[3][2]*poligono[x][2]) + (matriz[3][3]*poligono[x][3])) );
+        newpoints.push(vetorlocal);
+    }
+    console.table(newpoints);
+    return newpoints;
+}
+
+function rotate3D_Z(poligono,angle){
+    let radius = angle * Math.PI / 180;
+    let matriz =[
+        [Math.cos(radius),-(Math.sin(radius)),0,0],
+        [Math.sin(radius),Math.cos(radius),0,0],
+        [0,0,1,0],
+        [0,0,0,1]
+    ];
+    let newpoints = [];
+    for(let x = 0; x < poligono.length; x++){
+        let vetorlocal = [];
+        vetorlocal.push( Math.round((matriz[0][0]*poligono[x][0]) + (matriz[0][1]*poligono[x][1]) + (matriz[0][2]*poligono[x][2]) + (matriz[0][3]*poligono[x][3])) );
+        vetorlocal.push( Math.round((matriz[1][0]*poligono[x][0]) + (matriz[1][1]*poligono[x][1]) + (matriz[1][2]*poligono[x][2]) + (matriz[1][3]*poligono[x][3])) );
+        vetorlocal.push( Math.round((matriz[2][0]*poligono[x][0]) + (matriz[2][1]*poligono[x][1]) + (matriz[2][2]*poligono[x][2]) + (matriz[2][3]*poligono[x][3])) );
+        vetorlocal.push( Math.round((matriz[3][0]*poligono[x][0]) + (matriz[3][1]*poligono[x][1]) + (matriz[3][2]*poligono[x][2]) + (matriz[3][3]*poligono[x][3])) );
+        newpoints.push(vetorlocal);
+    }
+    console.table(newpoints);
+    return newpoints;
 }
