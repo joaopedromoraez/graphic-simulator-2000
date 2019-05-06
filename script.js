@@ -527,3 +527,43 @@ function rotate3D_Z(poligono,angle){
     console.table(newpoints);
     return newpoints;
 }
+
+function escala3D(poligono,X,Y,Z){
+    let matriz =[
+        [X,0,0,0],
+        [0,Y,0,0],
+        [0,0,Z,0],
+        [0,0,0,1]
+    ];
+    let newpoints = [];
+    for(let x = 0; x < poligono.length; x++){
+        let vetorlocal = [];
+        vetorlocal.push( (matriz[0][0]*poligono[x][0]) + (matriz[0][1]*poligono[x][1]) + (matriz[0][2]*poligono[x][2]) + (matriz[0][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[1][0]*poligono[x][0]) + (matriz[1][1]*poligono[x][1]) + (matriz[1][2]*poligono[x][2]) + (matriz[1][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[2][0]*poligono[x][0]) + (matriz[2][1]*poligono[x][1]) + (matriz[2][2]*poligono[x][2]) + (matriz[2][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[3][0]*poligono[x][0]) + (matriz[3][1]*poligono[x][1]) + (matriz[3][2]*poligono[x][2]) + (matriz[3][3]*poligono[x][3]) );
+        newpoints.push(vetorlocal);
+    }
+    console.table(newpoints);
+    return newpoints;
+}
+
+function trans3D(poligono,X,Y,Z){
+    let matriz =[
+        [1,0,0,X],
+        [0,1,0,Y],
+        [0,0,1,Z],
+        [0,0,0,1]
+    ];
+    let newpoints = [];
+    for(let x = 0; x < poligono.length; x++){
+        let vetorlocal = [];
+        vetorlocal.push( (matriz[0][0]*poligono[x][0]) + (matriz[0][1]*poligono[x][1]) + (matriz[0][2]*poligono[x][2]) + (matriz[0][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[1][0]*poligono[x][0]) + (matriz[1][1]*poligono[x][1]) + (matriz[1][2]*poligono[x][2]) + (matriz[1][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[2][0]*poligono[x][0]) + (matriz[2][1]*poligono[x][1]) + (matriz[2][2]*poligono[x][2]) + (matriz[2][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[3][0]*poligono[x][0]) + (matriz[3][1]*poligono[x][1]) + (matriz[3][2]*poligono[x][2]) + (matriz[3][3]*poligono[x][3]) );
+        newpoints.push(vetorlocal);
+    }
+    console.table(newpoints);
+    return newpoints;
+}

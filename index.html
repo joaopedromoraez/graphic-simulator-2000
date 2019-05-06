@@ -228,7 +228,7 @@ Os algoritmos que devem ser implementados são os seguintes:
             <th>
                 <div class="container-small">
                     <!--ROTAÇÃO 3D DE POLIGONO-->
-                    <label>ROTAÇÃO 3D PERSPECTIVA ORTOGRAFICA</label><br>
+                    <label>ROTAÇÃO 3D</label><br>
                     <label for="rotate-eixoX">EIXO X</label>
                     <input class="form-txt" type="text" id="rotate-eixoX"><br>
                     <input class="form-btn btn-positive" type="button" value="ROTACIONAR" onclick="
@@ -256,13 +256,55 @@ Os algoritmos que devem ser implementados são os seguintes:
                     pontos = []; pontos = trans;
                     poligono3dPrint(cubo3d(pontos))">
                 </div>
+
+                <div class="container-small">
+                    <!--TRANSLADO DO POLIGONO 3D-->
+                    <label>TRANSLADO 3D</label><br>
+                    <label for="trans3d-eixoX">EIXO X</label>
+                    <input class="form-txt" type="text" id="trans3d-eixoX"><br>
+
+
+                    <label for="trans3d-eixoY">EIXO Y</label>
+                    <input class="form-txt" type="text" id="trans3d-eixoY"><br>
+
+
+                    <label for="trans3d-eixoZ">EIXO Z</label>
+                    <input class="form-txt" type="text" id="trans3d-eixoZ"><br>
+                    <input class="form-btn btn-positive" type="button" value="ROTACIONAR" onclick="
+                    screenClean(xScreen,yScreen);
+                    let trans = [];
+                    trans = trans3D(pontos,numberValueById('trans3d-eixoX'),numberValueById('trans3d-eixoY'),numberValueById('trans3d-eixoZ'));
+                    pontos = []; pontos = trans;
+                    poligono3dPrint(cubo3d(pontos))">
+                </div>
+
+                <div class="container-small">
+                    <!--ESCALA DO POLIGONO 3D-->
+                    <label>ESCALA 3D</label><br>
+                    <label for="escala3d-eixoX">EIXO X</label>
+                    <input class="form-txt" type="text" id="escala3d-eixoX"><br>
+
+
+                    <label for="escala3d-eixoY">EIXO Y</label>
+                    <input class="form-txt" type="text" id="escala3d-eixoY"><br>
+
+
+                    <label for="escala3d-eixoZ">EIXO Z</label>
+                    <input class="form-txt" type="text" id="escala3d-eixoZ"><br>
+                    <input class="form-btn btn-positive" type="button" value="ROTACIONAR" onclick="
+                    screenClean(xScreen,yScreen);
+                    let trans = [];
+                    trans = escala3D(pontos,numberValueById('escala3d-eixoX'),numberValueById('escala3d-eixoY'),numberValueById('escala3d-eixoZ'));
+                    pontos = []; pontos = trans;
+                    poligono3dPrint(cubo3d(pontos))">
+                </div>
             </th>
         </tr>
     </table>
     <script> //CONTEM AS VARIAVEIS GLOBAIS
         //declaração do tamanho da tela de desenho
-        let xScreen = 50;
-        let yScreen = 50;
+        let xScreen = 70;
+        let yScreen = 70;
         //chama a função que cria a tela
         screen(xScreen, yScreen);
         //cria a variavel global de cor de contorno
