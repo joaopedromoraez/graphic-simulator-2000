@@ -14,7 +14,7 @@ Os algoritmos que devem ser implementados são os seguintes:
 [OK] Transformações - Rotação [0.85pts],
 [OK] Transformações - Escala [0.85pts],
 [OK] Projeções Ortográficas [0.85pts] e
-[  ] Projeções Perspectivas [0.85pts]).
+[OK] Projeções Perspectivas [0.85pts]).
 -->
 
 <html lang="pt-br">
@@ -271,7 +271,7 @@ Os algoritmos que devem ser implementados são os seguintes:
 
                     <label for="trans3d-eixoZ">EIXO Z</label>
                     <input class="form-txt" type="text" id="trans3d-eixoZ"><br>
-                    <input class="form-btn btn-positive" type="button" value="ROTACIONAR" onclick="
+                    <input class="form-btn btn-positive" type="button" value="TRANSLADAR" onclick="
                     screenClean(xScreen,yScreen);
                     let trans = [];
                     trans = trans3D(pontos,numberValueById('trans3d-eixoX'),numberValueById('trans3d-eixoY'),numberValueById('trans3d-eixoZ'));
@@ -292,12 +292,25 @@ Os algoritmos que devem ser implementados são os seguintes:
 
                     <label for="escala3d-eixoZ">EIXO Z</label>
                     <input class="form-txt" type="text" id="escala3d-eixoZ"><br>
-                    <input class="form-btn btn-positive" type="button" value="ROTACIONAR" onclick="
+                    <input class="form-btn btn-positive" type="button" value="ESCALAR" onclick="
                     screenClean(xScreen,yScreen);
                     let trans = [];
                     trans = escala3D(pontos,numberValueById('escala3d-eixoX'),numberValueById('escala3d-eixoY'),numberValueById('escala3d-eixoZ'));
                     pontos = []; pontos = trans;
                     poligono3dPrint(cubo3d(pontos))">
+                </div>
+                <div class="container-small">
+                    <!--PERPECTIVA 3D-->
+                    <label>ESCALA 3D</label><br>
+                    <label for="perpectiva-d">D</label>
+                    <input class="form-txt" type="text" id="perpectiva-d"><br>
+
+                    <input class="form-btn btn-positive" type="button" value="PERPECTIVA" onclick="
+                    screenClean(xScreen,yScreen);
+                    let trans = [];
+                    trans = perpectiva3d(pontos,numberValueById('perpectiva-d'));
+                    // pontos = []; pontos = trans;
+                    poligono3dPrint(cubo3d(trans))">
                 </div>
             </th>
         </tr>
@@ -320,14 +333,14 @@ Os algoritmos que devem ser implementados são os seguintes:
         let count = 0;
         //pontos do poligono 3D
         let pontos = [
-            [10,10,0,1],
-            [10,35,0,1],
-            [35,35,0,1],
-            [35,10,0,1],
-            [10,10,25,1],
-            [10,35,25,1],
-            [35,35,25,1],
-            [35,10,25,1]
+            [10,10,10,1],
+            [10,35,10,1],
+            [35,35,10,1],
+            [35,10,10,1],
+            [10,10,35,1],
+            [10,35,35,1],
+            [35,35,35,1],
+            [35,10,35,1]
         ];
     </script>
 </body>

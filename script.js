@@ -321,6 +321,7 @@ function fillScanline(poligonoScanlineFill, color, fill) {
     //A matriz [matrizPaint] é uma matriz local para ser variada e pintada com o algoritmo
     //na hora da pintura tem que ser feita uma correção com as variaveis oriX e oriY
 
+
 }
 
 //RECORTE
@@ -503,7 +504,7 @@ function cubo3d(pontos){
         }
         trans.push(newpoints);
     }
-    pontos = []
+    pontos = [];
     pontos = trans;
     //retorna os pontos do poligono arrendondado;
     return [
@@ -629,4 +630,32 @@ function drawAllPolygon(poligono){
     for(let x = 0; x < poligono.length; x++){
         poligonoPaint(poligono[x]);
     }
+}
+
+function perpectiva3d(poligono,d){
+    let matriz =[
+        [d,0,0,0],
+        [0,d,0,0],
+        [0,0,d,0],
+        [0,0,1,0]
+    ];
+    let newpoints = [];
+    for(let x = 0; x < poligono.length; x++){
+        let vetorlocal = [];
+        vetorlocal.push( (matriz[0][0]*poligono[x][0]) + (matriz[0][1]*poligono[x][1]) + (matriz[0][2]*poligono[x][2]) + (matriz[0][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[1][0]*poligono[x][0]) + (matriz[1][1]*poligono[x][1]) + (matriz[1][2]*poligono[x][2]) + (matriz[1][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[2][0]*poligono[x][0]) + (matriz[2][1]*poligono[x][1]) + (matriz[2][2]*poligono[x][2]) + (matriz[2][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[3][0]*poligono[x][0]) + (matriz[3][1]*poligono[x][1]) + (matriz[3][2]*poligono[x][2]) + (matriz[3][3]*poligono[x][3]) );
+        newpoints.push(vetorlocal);
+    }
+
+    for (let x = 0; x < poligono.length;x++){
+        newpoints[x][0] = newpoints[x][0] / newpoints[x][3];
+        newpoints[x][1] = newpoints[x][1] / newpoints[x][3]
+        newpoints[x][2] = newpoints[x][2] / newpoints[x][3]
+        newpoints[x][3] = newpoints[x][3] / newpoints[x][3]
+
+    }
+    console.table(newpoints);
+    return newpoints;
 }
