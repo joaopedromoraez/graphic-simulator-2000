@@ -438,6 +438,17 @@ function addPolygon(x,name = 'POLIGONO') {
 }
 
 function cubo3d(pontos){ 
+    let trans = []; 
+    for(let x = 0; x < pontos.length;x++){ //pega os pontos em formato float e faz arredondamento.
+        let newpoints = []
+        for (let y = 0; y < pontos[x].length; y++){
+            newpoints.push(Math.round(pontos[x][y]));
+        }
+        trans.push(newpoints);
+    }
+    pontos = []
+    pontos = trans;
+    //retorna os pontos do poligono arrendondado;
     return [
     [pontos[0],pontos[1],pontos[2],pontos[3]],
     [pontos[4],pontos[5],pontos[6],pontos[7]],
@@ -465,10 +476,10 @@ function rotate3D_X(poligono,angle){
     let newpoints = [];
     for(let x = 0; x < poligono.length; x++){
         let vetorlocal = [];
-        vetorlocal.push( Math.round((matriz[0][0]*poligono[x][0]) + (matriz[0][1]*poligono[x][1]) + (matriz[0][2]*poligono[x][2]) + (matriz[0][3]*poligono[x][3])) );
-        vetorlocal.push( Math.round((matriz[1][0]*poligono[x][0]) + (matriz[1][1]*poligono[x][1]) + (matriz[1][2]*poligono[x][2]) + (matriz[1][3]*poligono[x][3])) );
-        vetorlocal.push( Math.round((matriz[2][0]*poligono[x][0]) + (matriz[2][1]*poligono[x][1]) + (matriz[2][2]*poligono[x][2]) + (matriz[2][3]*poligono[x][3])) );
-        vetorlocal.push( Math.round((matriz[3][0]*poligono[x][0]) + (matriz[3][1]*poligono[x][1]) + (matriz[3][2]*poligono[x][2]) + (matriz[3][3]*poligono[x][3])) );
+        vetorlocal.push( (matriz[0][0]*poligono[x][0]) + (matriz[0][1]*poligono[x][1]) + (matriz[0][2]*poligono[x][2]) + (matriz[0][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[1][0]*poligono[x][0]) + (matriz[1][1]*poligono[x][1]) + (matriz[1][2]*poligono[x][2]) + (matriz[1][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[2][0]*poligono[x][0]) + (matriz[2][1]*poligono[x][1]) + (matriz[2][2]*poligono[x][2]) + (matriz[2][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[3][0]*poligono[x][0]) + (matriz[3][1]*poligono[x][1]) + (matriz[3][2]*poligono[x][2]) + (matriz[3][3]*poligono[x][3]) );
         newpoints.push(vetorlocal);
     }
     console.table(newpoints);
@@ -486,10 +497,10 @@ function rotate3D_Y(poligono,angle){
     let newpoints = [];
     for(let x = 0; x < poligono.length; x++){
         let vetorlocal = [];
-        vetorlocal.push( Math.round((matriz[0][0]*poligono[x][0]) + (matriz[0][1]*poligono[x][1]) + (matriz[0][2]*poligono[x][2]) + (matriz[0][3]*poligono[x][3])) );
-        vetorlocal.push( Math.round((matriz[1][0]*poligono[x][0]) + (matriz[1][1]*poligono[x][1]) + (matriz[1][2]*poligono[x][2]) + (matriz[1][3]*poligono[x][3])) );
-        vetorlocal.push( Math.round((matriz[2][0]*poligono[x][0]) + (matriz[2][1]*poligono[x][1]) + (matriz[2][2]*poligono[x][2]) + (matriz[2][3]*poligono[x][3])) );
-        vetorlocal.push( Math.round((matriz[3][0]*poligono[x][0]) + (matriz[3][1]*poligono[x][1]) + (matriz[3][2]*poligono[x][2]) + (matriz[3][3]*poligono[x][3])) );
+        vetorlocal.push( (matriz[0][0]*poligono[x][0]) + (matriz[0][1]*poligono[x][1]) + (matriz[0][2]*poligono[x][2]) + (matriz[0][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[1][0]*poligono[x][0]) + (matriz[1][1]*poligono[x][1]) + (matriz[1][2]*poligono[x][2]) + (matriz[1][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[2][0]*poligono[x][0]) + (matriz[2][1]*poligono[x][1]) + (matriz[2][2]*poligono[x][2]) + (matriz[2][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[3][0]*poligono[x][0]) + (matriz[3][1]*poligono[x][1]) + (matriz[3][2]*poligono[x][2]) + (matriz[3][3]*poligono[x][3]) );
         newpoints.push(vetorlocal);
     }
     console.table(newpoints);
@@ -507,10 +518,10 @@ function rotate3D_Z(poligono,angle){
     let newpoints = [];
     for(let x = 0; x < poligono.length; x++){
         let vetorlocal = [];
-        vetorlocal.push( Math.round((matriz[0][0]*poligono[x][0]) + (matriz[0][1]*poligono[x][1]) + (matriz[0][2]*poligono[x][2]) + (matriz[0][3]*poligono[x][3])) );
-        vetorlocal.push( Math.round((matriz[1][0]*poligono[x][0]) + (matriz[1][1]*poligono[x][1]) + (matriz[1][2]*poligono[x][2]) + (matriz[1][3]*poligono[x][3])) );
-        vetorlocal.push( Math.round((matriz[2][0]*poligono[x][0]) + (matriz[2][1]*poligono[x][1]) + (matriz[2][2]*poligono[x][2]) + (matriz[2][3]*poligono[x][3])) );
-        vetorlocal.push( Math.round((matriz[3][0]*poligono[x][0]) + (matriz[3][1]*poligono[x][1]) + (matriz[3][2]*poligono[x][2]) + (matriz[3][3]*poligono[x][3])) );
+        vetorlocal.push( (matriz[0][0]*poligono[x][0]) + (matriz[0][1]*poligono[x][1]) + (matriz[0][2]*poligono[x][2]) + (matriz[0][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[1][0]*poligono[x][0]) + (matriz[1][1]*poligono[x][1]) + (matriz[1][2]*poligono[x][2]) + (matriz[1][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[2][0]*poligono[x][0]) + (matriz[2][1]*poligono[x][1]) + (matriz[2][2]*poligono[x][2]) + (matriz[2][3]*poligono[x][3]) );
+        vetorlocal.push( (matriz[3][0]*poligono[x][0]) + (matriz[3][1]*poligono[x][1]) + (matriz[3][2]*poligono[x][2]) + (matriz[3][3]*poligono[x][3]) );
         newpoints.push(vetorlocal);
     }
     console.table(newpoints);
