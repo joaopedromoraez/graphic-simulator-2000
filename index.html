@@ -98,6 +98,7 @@ Os algoritmos que devem ser implementados são os seguintes:
                         <input class="form-txt" type="text" id="polygon-clip"><br>
                         <input class="form-btn btn-positive" type="button" value="RECORTAR" onclick="screenClean(xScreen,yScreen);
                                     polygonClip(listPolygon[numberValueById('polygon-subjetivo')],listPolygon[numberValueById('polygon-clip')]);
+                                    drawAllPolygon(listPolygon);
                                     ">
                 </div>
                 <div class="container-small">
@@ -136,7 +137,7 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <input class="form-txt" type="text" id="translado-eixoY"><br>
                     <input class="form-btn btn-positive" type="button" value="TRANSLAR" onclick="screenClean(xScreen,yScreen);
                                 poligonoTranslado(poligono,numberValueById('translado-eixoX'),numberValueById('translado-eixoY'))
-                                poligonoPaint(poligono);">
+                                drawAllPolygon(listPolygon)">
                 </div>
                 <div class="container-small">
                     <!--ESCALA-->
@@ -147,7 +148,7 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <input class="form-txt" type="text" id="escala-eixoY"><br>
                     <input class="form-btn btn-positive" type="button" value="REDIMENSIONAR" onclick="screenClean(xScreen,yScreen);
                                 poligonoEscala(poligono,numberValueById('escala-eixoX'),numberValueById('escala-eixoY'))
-                                poligonoPaint(poligono);">
+                                drawAllPolygon(listPolygon)">
                 </div>
                 <div class="container-small">
                     <!--ROTAÇÃO-->
@@ -160,7 +161,7 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <input class="form-txt" type="text" id="rotacao-angle"><br>
                     <input class="form-btn btn-positive" type="button" value="ROTACIONAR" onclick="screenClean(xScreen,yScreen);
                                 poligonoRotate(poligono,numberValueById('rotacao-eixoX'),numberValueById('rotacao-eixoY'),numberValueById('rotacao-angle'))
-                                poligonoPaint(poligono);">
+                                drawAllPolygon(listPolygon)">
                 </div>
 
             </th>

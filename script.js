@@ -567,3 +567,9 @@ function trans3D(poligono,X,Y,Z){
     console.table(newpoints);
     return newpoints;
 }
+
+function drawAllPolygon(poligono){
+    for(let x = 0; x < poligono.length; x++){
+        poligonoPaint(poligono[x]);
+    }
+}
