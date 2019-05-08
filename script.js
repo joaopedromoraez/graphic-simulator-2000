@@ -152,9 +152,6 @@ function circle(xCenter, yCenter, radius) {
 //Bezier Quadratico
 function bezierQuadratic(x1, y1, x2, y2, x3, y3) {
     let pontosbezier = [];
-    console.log(`P1(${x1},${y1})`);
-    console.log(`P2(${x2},${y2})`);
-    console.log(`P3(${x3},${y3})`);
     for (let t = 0; t <= 1; t += 0.1) {
         let xu = Math.pow(1 - t, 2) * x1 + 2 * t * (1 - t) * x2 + Math.pow(t, 2) * x3;
         let yu = Math.pow(1 - t, 2) * y1 + 2 * t * (1 - t) * y2 + Math.pow(t, 2) * y3;
@@ -169,10 +166,6 @@ function bezierQuadratic(x1, y1, x2, y2, x3, y3) {
 //Bezier Cubico
 function bezierCubic(x1, y1, x2, y2, x3, y3, x4, y4) {
     let pontosbezier = [];
-    console.log(`P1(${x1},${y1})`);
-    console.log(`P2(${x2},${y2})`);
-    console.log(`P3(${x3},${y3})`);
-    console.log(`P4(${x4},${y4})`);
     for (let t = 0; t <= 1; t += 0.1) {
         let xu = Math.pow(1 - t, 3) * x1 + 3 * t * Math.pow(1 - t, 2) * x2 + 3 * Math.pow(t, 2) * (1 - t) * x3 + Math.pow(t, 3) * x4;
         let yu = Math.pow(1 - t, 3) * y1 + 3 * t * Math.pow(1 - t, 2) * y2 + 3 * Math.pow(t, 2) * (1 - t) * y3 + Math.pow(t, 3) * y4;
@@ -268,9 +261,9 @@ function floodFill(x, y, fill_color, boundary_color) {
 }
 
 //scanline
-function fillScanline(poligonoScanlineFill, color, fill) {
-
-    let listax = []; listay = []; matrizPaint = []; p = poligonoScanlineFill;
+function fillScanline(poligono, fill) {
+    
+    let listax = []; listay = []; matrizPaint = []; p = poligono;
 
     for (let x = 0; x < p.length; x++) {
         listax.push(parseInt(p[x][0]));
@@ -284,12 +277,12 @@ function fillScanline(poligonoScanlineFill, color, fill) {
     let maxX = listax.reduce(function (a, b) { return Math.max(a, b); });
 
     let maxY = listay.reduce(function (a, b) { return Math.max(a, b); });
-
+/*
     //cria o vetor e adiciona cor
     for (let y = 0; y <= (maxY - oriY); y++) {
         let vectorAux = [];
         for (let x = 0; x <= (maxX - oriX); x++) {
-            vectorAux.push('#ffffff');
+            vectorAux.push(false);
         }
         matrizPaint.push(vectorAux);
     }
@@ -320,14 +313,70 @@ function fillScanline(poligonoScanlineFill, color, fill) {
 
     for (let y = 0; y < pontosPaintLocal.length; y++){
         for (let x = 0; x < pontosPaintLocal[y].length; x++){
-            matrizPaint[pontosPaintLocal[y][x][0]][pontosPaintLocal[y][x][1]] = color;
+            matrizPaint[pontosPaintLocal[y][x][0]][pontosPaintLocal[y][x][1]] = true;
         }
     }
 
-    console.table(matrizPaint); 
+    console.table(matrizPaint); */
     //A matriz [matrizPaint] é uma matriz local para ser variada e pintada com o algoritmo
     //na hora da pintura tem que ser feita uma correção com as variaveis oriX e oriY
+    //essa matriz contem valores discretos para facilitar o processamento
+    let tabelaLados = [];
+    console.table(poligono);
+    for(let count = 0; count < poligono.length; count++){
+        let ymin, ymax, xofymin, xofymax;
+        if( count != poligono.length - 1){
+            if (poligono[count][1] > poligono[count+1][1] && count !== poligono.length ){ //loop para decidir ymax e ymin
+                ymax = poligono[count][1];
+                ymin = poligono[(count+1)][1];
+                xofymin = poligono[(count+1)][0];
+                xofymax = poligono[count][0];
+            } else {
+            xofymin = poligono[count][0];
+            ymin = poligono[count][1];
+            ymax = poligono[(count+1)][1];
+            xofymax = poligono[(count+1)][0];
+            }
+        } else {
+            if ((poligono[count][1] > poligono[0][1]) && (count < poligono.length) ){ //loop para decidir ymax e ymin
+                ymax = poligono[count][1];
+                ymin = poligono[0][1];
+                xofymin = poligono[0][0];
+                xofymax = poligono[count][0];
+            } else {
+            xofymin = poligono[count][0];
+            ymin = poligono[count][1];
+            ymax = poligono[0][1];
+            xofymax = poligono[0][0];
+            }
+        }
+        tabelaLados.push({ymin:ymin,ymax:ymax,xofymin:xofymin,m:((xofymax-xofymin)/(ymax-ymin))});
+    }
+    console.table(tabelaLados);
+    let tabelabordas = [];
+    //loop para ver os pontos de intersessão
+    for (let y = oriY; y <= maxY; y++){
+        let bordas = [];
+        for (let x = 0; x < tabelaLados.length; x++){
+            if( y <= tabelaLados[x].ymax && y >= tabelaLados[x].ymin && tabelaLados[x].m !== Infinity){
+                let a = Math.round(tabelaLados[x].m * (y - tabelaLados[x].ymin) + tabelaLados[x].xofymin);
+                // let a = tabelaLados[x].m * (y - tabelaLados[x].ymin) + tabelaLados[x].xofymin;
 
+                bordas.push(a);
+            }
+        }
+        tabelabordas.push(bordas);
+    }
+    let sortNumber = function(x, y) { return x - y; };
+    for (let x = 0; x < tabelabordas.length; x++){
+        tabelabordas[x].sort(sortNumber);
+    }
+    console.table(tabelabordas);
+
+    for (let x = 0; x < tabelabordas.length; x++){
+        if()
+    }
+    
 
 }
 
@@ -447,7 +496,7 @@ function cohenSutherlandClip(x1, y1, x2, y2) {
     }
 }
 
-//=========poligono [não terminado]
+//=========poligono 
 function polygonClip(subjectPolygon, clipPolygon) {
 
     var cp1, cp2, s, e;

@@ -105,7 +105,7 @@ Os algoritmos que devem ser implementados são os seguintes:
                     <!--PRENCHIMENTO SCANLINE-->
                     <label>PREENCHIMENTO SCANLINE</label><br>
                     <input class="form-btn btn-positive" type="button" value="PREENCHER"
-                        onclick="fillScanline(poligono,color,fill);">
+                        onclick="fillScanline(poligono,fill);">
                 </div>
                 <div class="container-small">
                     <!--PRENCHIMENTO RECURSIVO-->
@@ -317,8 +317,8 @@ Os algoritmos que devem ser implementados são os seguintes:
     </table>
     <script> //CONTEM AS VARIAVEIS GLOBAIS
         //declaração do tamanho da tela de desenho
-        let xScreen = 70;
-        let yScreen = 70;
+        let xScreen = 60;
+        let yScreen = 60;
         //chama a função que cria a tela
         screen(xScreen, yScreen);
         //cria a variavel global de cor de contorno
