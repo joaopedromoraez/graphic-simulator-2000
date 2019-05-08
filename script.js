@@ -261,84 +261,169 @@ function floodFill(x, y, fill_color, boundary_color) {
 }
 
 //scanline
-function fillScanline(poligono, fill) {
+// Ported from C code in Hearn & Baker "Computer Graphics - C Version", 2nd edition
+function fillScanline(polygon, fill) {
     
-    let listax = []; listay = []; p = poligono;
-
-    for (let x = 0; x < p.length; x++) {
-        listax.push(parseInt(p[x][0]));
-        listay.push(parseInt(p[x][1]));
-    }
-
-    let oriX = listax.reduce(function (a, b) { return Math.min(a, b); });
-
-    let oriY = listay.reduce(function (a, b) { return Math.min(a, b); });
-
-    let maxX = listax.reduce(function (a, b) { return Math.max(a, b); });
-
-    let maxY = listay.reduce(function (a, b) { return Math.max(a, b); });
-
-    let tabelaLados = [];
-    console.table(poligono);
-    for(let count = 0; count < poligono.length; count++){
-        let ymin, ymax, xofymin, xofymax;
-        if( count != poligono.length - 1){
-            if (poligono[count][1] > poligono[count+1][1] && count !== poligono.length ){ //loop para decidir ymax e ymin
-                ymax = poligono[count][1];
-                ymin = poligono[(count+1)][1];
-                xofymin = poligono[(count+1)][0];
-                xofymax = poligono[count][0];
-            } else {
-            xofymin = poligono[count][0];
-            ymin = poligono[count][1];
-            ymax = poligono[(count+1)][1];
-            xofymax = poligono[(count+1)][0];
-            }
-        } else {
-            if ((poligono[count][1] > poligono[0][1]) && (count < poligono.length) ){ //loop para decidir ymax e ymin
-                ymax = poligono[count][1];
-                ymin = poligono[0][1];
-                xofymin = poligono[0][0];
-                xofymax = poligono[count][0];
-            } else {
-            xofymin = poligono[count][0];
-            ymin = poligono[count][1];
-            ymax = poligono[0][1];
-            xofymax = poligono[0][0];
-            }
+    function insertEdge(list, edge) {
+      let q = list,
+          p = list.next
+      
+      while (p) {
+        if (edge.xIntersect < p.xIntersect) {
+          p = null
         }
-        tabelaLados.push({ymin:ymin,ymax:ymax,xofymin:xofymin,m:((xofymax-xofymin)/(ymax-ymin))});
-    }
-    console.table(tabelaLados);
-    let tabelabordas = [];
-    //loop para ver os pontos de intersessão
-    for (let y = oriY; y <= maxY; y++){
-        let bordas = [];
-        for (let x = 0; x < tabelaLados.length; x++){
-            if( y <= tabelaLados[x].ymax && y >= tabelaLados[x].ymin && tabelaLados[x].m !== Infinity){
-                let a = Math.round(tabelaLados[x].m * (y - tabelaLados[x].ymin) + tabelaLados[x].xofymin);
-                // let a = tabelaLados[x].m * (y - tabelaLados[x].ymin) + tabelaLados[x].xofymin;
-
-                bordas.push(a);
-            }
+        else {
+          q = p
+          p = p.next
         }
-        tabelabordas.push(bordas);
-    }
-    let sortNumber = function(x, y) { return x - y; };
-    for (let x = 0; x < tabelabordas.length; x++){
-        tabelabordas[x].sort(sortNumber);
-    }
-    console.table(tabelabordas);
-
-    for (let x = 0; x < tabelabordas.length; x++){
-        for(let y = 0 ; y < parseInt(tabelabordas[x].length/2); y++){
-            bresenham(tabelabordas[x][y],x+oriY,tabelabordas[x][y+1],x+oriY, fill);
-        }
-        // console.log(`linha ${x+oriY} ${tabelabordas[x][y]} ${tabelabordas[x][y+1]}`);
+      }
+      
+      edge.next = q.next
+      q.next = edge
     }
     
-
-}
+    function yNext(k, cnt, pts) {
+      let j
+      
+      if ((k+1) > (cnt-1)) {
+        j = 0
+      }
+      else {
+        j = k+1
+      }
+      
+      while (pts[k][1] == pts[j][1]) {
+        if ((j+1) > (cnt-1)) {
+          j = 0
+        }
+        else {
+          j++
+        }
+      }
+      
+      return pts[j][1]
+    }
+    
+    function makeEdgeRec(lower, upper, yComp, edges) {
+      let edge = {}
+      edge.dxPerScan = (upper[0] - lower[0]) / (upper[1] - lower[1])
+      edge.xIntersect = lower[0]
+      if (upper[1] < yComp) {
+        edge.yUpper = upper[1] - 1
+      }
+      else {
+        edge.yUpper = upper[1]
+      }
+      insertEdge(edges[lower[1]], edge)
+    }
+    
+    function buildEdgeList(pts, edges) {
+      let cnt = pts.length,
+          i,
+          v1 = [0,0],
+          v2 = [0,0],
+          yPrev = pts[cnt-2][1]
+          
+      
+      v1[0] = pts[cnt-1][0]
+      v1[1] = pts[cnt-1][1]
+      
+      for (i=0; i<cnt; i++) {
+        v2 = pts[i]
+        if (v1[1] <= v2[1]) {
+          makeEdgeRec(v1, v2, yNext(i, cnt, pts), edges)
+        }
+        if (v1[1] > v2[1]) {
+          makeEdgeRec(v2, v1, yPrev, edges)
+        }
+        yPrev = v1[1]
+        v1 = v2
+      }
+    }
+    
+    function buildActiveList(scan, active, edges) {
+      let p = edges[scan].next,
+          q
+      
+      while (p) {
+        q = p.next
+        insertEdge(active, p)
+        p = q
+      }
+    }
+    
+    function fillScan(scan, active) {
+      let p1 = active.next,
+          p2,
+          i
+      
+      while (p1) {
+        p2 = p1.next
+        // HACK FL for some reason we sometimes don't get pairwise lists...?
+        if (p2) {
+          for (i=Math.round(p1.xIntersect); i<p2.xIntersect; i++) {
+            pixelPaint(i,scan,fill);
+            // setPixel(i, scan)
+          }
+        }
+        p1 = p2 && p2.next
+      }
+    }
+    
+    function deleteAfter(q) {
+      let p = q.next
+      q.next = p.next
+    }
+    
+    function updateActiveList(scan, active) {
+      let q = active,
+          p = active.next
+      
+      while (p) {
+        if (scan >= p.yUpper) {
+          p = p.next
+          deleteAfter(q)
+        }
+        else {
+          p.xIntersect = p.xIntersect + p.dxPerScan
+          q = p
+          p = p.next
+        }
+      }
+    }
+    
+    function resortActiveList(active) {
+      let q,
+          p = active.next
+      
+      active.next = null
+      while (p) {
+        q = p.next
+        insertEdge(active, p)
+        p = q
+      }
+    }
+    
+    let edges = [],
+        active,
+        i,scan
+    
+    for (i = 0; i<500; i++) {
+      edges[i] = {next: null}
+    }
+    
+    buildEdgeList(polygon, edges)
+    active = { next: null }
+    
+    for (scan = 0; scan<500; scan++) {
+      buildActiveList(scan, active, edges)
+      if (active.next) {
+        fillScan(scan, active)
+        updateActiveList(scan, active)
+        resortActiveList(active)
+      }
+    }
+  }
 
 //RECORTE
 //linha [Cohen-Sutherland]
