@@ -75,14 +75,14 @@ function coordenadas(x, y) {
 
 }
 // =========== ALGORITMOS GRAFICOS ==================
-function bresenham(x0, y0, x1, y1) {
+function bresenham(x0, y0, x1, y1, cor = color) {
 
     let dx = Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
     let dy = Math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
     let err = (dx > dy ? dx : -dy) / 2;
 
     while (true) {
-        pixelPaint(x0, y0);
+        pixelPaint(x0, y0, cor);
         if (x0 === x1 && y0 === y1) break;
         let e2 = err;
         if (e2 > -dx) { err -= dy; x0 += sx; }
@@ -263,7 +263,7 @@ function floodFill(x, y, fill_color, boundary_color) {
 //scanline
 function fillScanline(poligono, fill) {
     
-    let listax = []; listay = []; matrizPaint = []; p = poligono;
+    let listax = []; listay = []; p = poligono;
 
     for (let x = 0; x < p.length; x++) {
         listax.push(parseInt(p[x][0]));
@@ -277,50 +277,7 @@ function fillScanline(poligono, fill) {
     let maxX = listax.reduce(function (a, b) { return Math.max(a, b); });
 
     let maxY = listay.reduce(function (a, b) { return Math.max(a, b); });
-/*
-    //cria o vetor e adiciona cor
-    for (let y = 0; y <= (maxY - oriY); y++) {
-        let vectorAux = [];
-        for (let x = 0; x <= (maxX - oriX); x++) {
-            vectorAux.push(false);
-        }
-        matrizPaint.push(vectorAux);
-    }
-    let bresenhamLocal = function(x0, y0, x1, y1) {
-        let pontoslocais = [];
-        let dx = Math.abs(x1 - x0), sx = x0 < x1 ? 1 : -1;
-        let dy = Math.abs(y1 - y0), sy = y0 < y1 ? 1 : -1;
-        let err = (dx > dy ? dx : -dy) / 2;
-        while (true) {
-            // pixelPaint(x0, y0);
-            pontoslocais.push([[y0 - oriY],[x0 - oriX]])
-            if (x0 === x1 && y0 === y1) break;
-            let e2 = err;
-            if (e2 > -dx) { err -= dy; x0 += sx; }
-            if (e2 < dy) { err += dx; y0 += sy; }
-        }
-        return pontoslocais;
-    }
-    let pontosPaintLocal = [];
-    for (let count = 0; count < p.length; count++) {
-        if (count != p.length - 1) {
-            pontosPaintLocal.push(bresenhamLocal(p[count][0], p[count][1], p[count + 1][0], p[count + 1][1]));
-        }
-        else {
-            pontosPaintLocal.push(bresenhamLocal(p[0][0], p[0][1], p[p.length - 1][0], p[p.length - 1][1]));
-        }
-    }
 
-    for (let y = 0; y < pontosPaintLocal.length; y++){
-        for (let x = 0; x < pontosPaintLocal[y].length; x++){
-            matrizPaint[pontosPaintLocal[y][x][0]][pontosPaintLocal[y][x][1]] = true;
-        }
-    }
-
-    console.table(matrizPaint); */
-    //A matriz [matrizPaint] é uma matriz local para ser variada e pintada com o algoritmo
-    //na hora da pintura tem que ser feita uma correção com as variaveis oriX e oriY
-    //essa matriz contem valores discretos para facilitar o processamento
     let tabelaLados = [];
     console.table(poligono);
     for(let count = 0; count < poligono.length; count++){
@@ -374,7 +331,10 @@ function fillScanline(poligono, fill) {
     console.table(tabelabordas);
 
     for (let x = 0; x < tabelabordas.length; x++){
-        if()
+        for(let y = 0 ; y < parseInt(tabelabordas[x].length/2); y++){
+            bresenham(tabelabordas[x][y],x+oriY,tabelabordas[x][y+1],x+oriY, fill);
+        }
+        // console.log(`linha ${x+oriY} ${tabelabordas[x][y]} ${tabelabordas[x][y+1]}`);
     }
     
 
