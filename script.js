@@ -261,7 +261,6 @@ function floodFill(x, y, fill_color, boundary_color) {
 }
 
 //scanline
-// Ported from C code in Hearn & Baker "Computer Graphics - C Version", 2nd edition
 function fillScanline(polygon, fill) {
     
     function insertEdge(list, edge) {
@@ -759,4 +758,19 @@ function perpectiva3d(poligono,d){
     }
     console.table(newpoints);
     return newpoints;
+}
+
+function avengers(){
+    let fill = '#ff0000';
+    let poligono1 = [[34,1],[34,29],[30,25],[30,11],[21,30],[30,30],[30,28],[34,32],[30,36],[30,34],[20,34],[13,48],[7,48],[29,1]];
+    let poligono2 = [[34,35],[30,39],[34,39]]
+    circle(25,25,19);
+    circle(25,25,22);
+    floodFill(25, 4, fill, '#000000')
+    fillScanline(poligono1, fill)
+    fillScanline(poligono2, fill)
+    poligonoPaint(poligono1);
+    poligonoPaint(poligono2);
+    pixelPaint(31,30,fill);
+    pixelPaint(31,34,fill);
 }
