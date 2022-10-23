@@ -71,7 +71,7 @@ function numberValueById(x) {
 }
 
 function coordenadas(x, y) {
-    document.getElementById('coordenadas').innerHTML = `COORDENADAS (${x},${y})`;
+    document.getElementById('coordenadas').innerHTML = `COORDENADAS (x${x},y${y})`;
 
 }
 // =========== ALGORITMOS GRAFICOS ==================
